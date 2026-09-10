@@ -57,7 +57,7 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>Image</td>
       <td>
         <a href="./models/gpt-image-2/text-to-image.py"><code>text-to-image</code></a> ·
-        <a href="./models/gpt-image-2/image-reference.py"><code>image-reference</code></a>
+        <a href="./models/gpt-image-2/image-to-image.py"><code>image-to-image</code></a>
       </td>
       <td>OpenAI</td>
     </tr>
@@ -143,13 +143,13 @@ Video and audio models return the same shape; `output[].url` points at an `.mp4`
 ```
 models/
 └── <model-id>/
-    ├── README.md          model summary, request & response shape, pricing, tips
+    ├── README.md          model summary, request & response shape, pricing
     ├── <use-case>.py      Python 3.8+ · standard library only
     ├── <use-case>.ts      Node.js 18+ · native fetch · no dependencies
     └── <use-case>.sh      curl only · no jq
 ```
 
-Use-case names are shared across models so you always know what to look for: `text-to-image`, `image-reference`, `text-to-video`, `image-to-video`, `reference-to-video`, `text-to-speech`, `voice-clone`.
+Use-case names are shared across models so you always know what to look for: `text-to-image`, `image-to-image`, `text-to-video`, `image-to-video`, `reference-to-video`, `text-to-speech`, `voice-clone`.
 
 <br>
 

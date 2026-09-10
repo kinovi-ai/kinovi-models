@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# image-reference.py — Edit or restyle an existing image with GPT Image 2 on Kinovi.
+# image-to-image.py — Edit or restyle an existing image with GPT Image 2 on Kinovi.
 #
 # Usage:
 #   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 #   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
-#   python3 image-reference.py
+#   python3 image-to-image.py
 #
 # No third-party dependencies. Python 3.8+.
 
@@ -51,7 +51,7 @@ INPUTS = {
     "aspectRatio": "auto",  # auto keeps the source ratio
     "resolution": "1k",     # 1k | 2k | 4k
     "quality": "low",       # low | medium | high
-    "outputFormat": "png",  # png | jpeg | webp
+    "outputFormat": "png",  # png | jpeg
 }
 
 # ---- you normally don't need to edit below this line ----
@@ -99,7 +99,7 @@ print(f"Done. Credits used: {info['creditsUsed']}")
 for i, item in enumerate(info["output"]):
     url = item["url"]
     ext = os.path.splitext(url.split("?")[0])[1] or ".png"
-    filename = f"image-reference-{i}{ext}" if len(info["output"]) > 1 else f"image-reference{ext}"
+    filename = f"image-to-image-{i}{ext}" if len(info["output"]) > 1 else f"image-to-image{ext}"
     with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "kinovi-models/1.0"})) as res:
         with open(filename, "wb") as f:
             f.write(res.read())

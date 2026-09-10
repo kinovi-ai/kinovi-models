@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# image-reference.sh — Edit or restyle an existing image with GPT Image 2 on Kinovi.
+# image-to-image.sh — Edit or restyle an existing image with GPT Image 2 on Kinovi.
 #
 # Usage:
 #   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 #   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
-#   bash image-reference.sh
+#   bash image-to-image.sh
 #
 # Requires only curl. No jq needed.
 set -euo pipefail
@@ -79,6 +79,6 @@ CREDITS=$(printf '%s' "$RESULT" | grep -o '"creditsUsed":[0-9.]*' | cut -d: -f2)
 echo "Done. Credits used: $CREDITS"
 URL=$(printf '%s' "$RESULT" | grep -o '"url":"[^"]*"' | head -1 | cut -d'"' -f4)
 EXT="${URL##*.}"; EXT="${EXT%%\?*}"
-OUT="image-reference.${EXT:-png}"
+OUT="image-to-image.${EXT:-png}"
 curl -sS -o "$OUT" "$URL"
 echo "Saved $OUT  $URL"

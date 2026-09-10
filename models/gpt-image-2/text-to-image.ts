@@ -43,7 +43,7 @@ const INPUTS = {
   aspectRatio: "1:1", // auto | 1:1 | 4:3 | 3:4 | 16:9 | 9:16
   resolution: "1k", // 1k | 2k | 4k
   quality: "low", // low | medium | high
-  outputFormat: "png", // png | jpeg | webp
+  outputFormat: "png", // png | jpeg
 };
 
 // ---- you normally don't need to edit below this line ----

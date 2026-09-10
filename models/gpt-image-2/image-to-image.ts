@@ -1,9 +1,9 @@
-// image-reference.ts — Edit or restyle an existing image with GPT Image 2 on Kinovi.
+// image-to-image.ts — Edit or restyle an existing image with GPT Image 2 on Kinovi.
 //
 // Usage:
 //   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 //   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
-//   npx tsx image-reference.ts             # or: node --experimental-strip-types image-reference.ts
+//   npx tsx image-to-image.ts             # or: node --experimental-strip-types image-to-image.ts
 //
 // No third-party dependencies. Node.js 18+.
 
@@ -45,7 +45,7 @@ const INPUTS = {
   aspectRatio: "auto", // auto keeps the source ratio
   resolution: "1k", // 1k | 2k | 4k
   quality: "low", // low | medium | high
-  outputFormat: "png", // png | jpeg | webp
+  outputFormat: "png", // png | jpeg
 };
 
 // ---- you normally don't need to edit below this line ----
@@ -95,7 +95,7 @@ async function main() {
   const items = info.output ?? [];
   for (const [i, item] of items.entries()) {
     const ext = new URL(item.url).pathname.match(/\.[a-z0-9]+$/i)?.[0] ?? ".png";
-    const filename = items.length > 1 ? `image-reference-${i}${ext}` : `image-reference${ext}`;
+    const filename = items.length > 1 ? `image-to-image-${i}${ext}` : `image-to-image${ext}`;
     await writeFile(filename, Buffer.from(await (await fetch(item.url)).arrayBuffer()));
     console.log(`Saved ${filename}  (${item.width}x${item.height})  ${item.url}`);
   }

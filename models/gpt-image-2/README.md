@@ -46,11 +46,11 @@ Each script submits a task, polls until it finishes, and saves the image next to
       <td><a href="./text-to-image.sh"><code>.sh</code></a></td>
     </tr>
     <tr>
-      <td><b>Image reference</b></td>
+      <td><b>Image to image</b></td>
       <td>Restyle an existing image via <code>uploadedUrls</code></td>
-      <td><a href="./image-reference.py"><code>.py</code></a></td>
-      <td><a href="./image-reference.ts"><code>.ts</code></a></td>
-      <td><a href="./image-reference.sh"><code>.sh</code></a></td>
+      <td><a href="./image-to-image.py"><code>.py</code></a></td>
+      <td><a href="./image-to-image.ts"><code>.ts</code></a></td>
+      <td><a href="./image-to-image.sh"><code>.sh</code></a></td>
     </tr>
   </tbody>
 </table>
@@ -96,12 +96,13 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
+| `model` | `string` | **required** | Must be `"gpt-image-2"`. |
 | `inputs.prompt` | `string` | **required** | What to generate, or how to edit the reference image. |
 | `inputs.uploadedUrls` | `string[]` | – | Up to 10 publicly reachable reference image URLs. Omit for pure text-to-image. |
 | `inputs.aspectRatio` | `string` | `auto` | `auto` · `1:1` · `4:3` · `3:4` · `16:9` · `9:16`. `auto` follows the reference image when given. |
 | `inputs.resolution` | `string` | `1k` | `1k` · `2k` · `4k` |
 | `inputs.quality` | `string` | `low` | `low` · `medium` · `high`. With `resolution`, sets the price. |
-| `inputs.outputFormat` | `string` | `png` | `png` · `jpeg` · `webp` |
+| `inputs.outputFormat` | `string` | `png` | `png` · `jpeg` |
 | `inputs.background` | `string` | `auto` | `auto` · `opaque` |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
@@ -144,22 +145,13 @@ Poll every couple of seconds until `status` is `success` or `fail`. A 1K image u
 
 ## Pricing
 
-Price is set by `quality` × `resolution`. Both examples default to `low` / `1k`, the cheapest tier. Live prices: [kinovi.ai/models/gpt-image-2](https://kinovi.ai/models/gpt-image-2).
+Price is set by `quality` × `resolution`. Both examples use `low` / `1k` ($0.010 · 2.17 credits). Live prices: [kinovi.ai/models/gpt-image-2](https://kinovi.ai/models/gpt-image-2).
 
 | | 1K | 2K | 4K |
 |:--|--:|--:|--:|
-| **low** | $0.010 | $0.020 | $0.030 |
-| **medium** | $0.060 | $0.100 | $0.180 |
-| **high** | $0.220 | $0.400 | $0.720 |
-
-<br>
-
-## Tips
-
-- Write the scene as plain sentences. GPT Image 2 handles long, natural prompts well.
-- For text inside the image, quote it exactly: *a neon sign that reads "OPEN LATE"*.
-- With references, say what to keep and what to change: *keep the pose and outfit, change the background to a rainy street*.
-- Iterate at `low` / `1k`, then rerun the final prompt at `high` / `2k` or `4k`.
+| **low** | $0.010 · 2.17 cr | $0.020 · 4.34 cr | $0.030 · 6.52 cr |
+| **medium** | $0.060 · 13.03 cr | $0.100 · 21.72 cr | $0.180 · 39.09 cr |
+| **high** | $0.220 · 47.78 cr | $0.400 · 86.87 cr | $0.720 · 156.36 cr |
 
 <br>
 
