@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# text-to-image.sh — Generate an image from a text prompt with GPT Image 2 on Kinovi.
+#
+# Usage:
+#   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
+#   bash text-to-image.sh
+#
+# Requires only curl. No jq needed.
+set -euo pipefail
+
+MODEL="gpt-image-2"
+read -r -d '' INPUTS <<'JSON' || true
+{
+  "prompt": "A photorealistic close-up of a steaming cup of coffee on a wooden table, morning sunlight streaming through a window, shallow depth of field.",
+  "aspectRatio": "1:1",
+  "resolution": "1k",
+  "quality": "low",
+  "outputFormat": "png"
+}
+JSON
+
+# ---- you normally don't need to edit below this line ----
+
+API_BASE="https://kinovi.ai/api/v1"
+: "${KINOVI_API_KEY:?Set KINOVI_API_KEY first: export KINOVI_API_KEY=your-api-key}"
+AUTH=(-H "Authorization: Bearer $KINOVI_API_KEY")
+
+# 1. Submit the task
+RESPONSE=$(curl -sS -X POST "$API_BASE/jobs/createTask" \
+  "${AUTH[@]}" -H "Content-Type: application/json" \
+  -d "{\"model\":\"$MODEL\",\"inputs\":$INPUTS}")
+TASK_ID=$(printf '%s' "$RESPONSE" | grep -o '"taskId":"[^"]*"' | cut -d'"' -f4 || true)
+if [[ -z "$TASK_ID" ]]; then
+  echo "createTask failed: $RESPONSE" >&2
+  exit 1
+fi
+echo "Task created: $TASK_ID"
+
+# 2. Poll until it reaches a terminal state (success | fail)
+while true; do
+  RESULT=$(curl -sS "$API_BASE/jobs/recordInfo?taskId=$TASK_ID" "${AUTH[@]}")
+  STATUS=$(printf '%s' "$RESULT" | grep -o '"status":"[^"]*"' | head -1 | cut -d'"' -f4)
+  case "$STATUS" in
+    success) break ;;
+    fail) echo "Task failed: $RESULT" >&2; exit 1 ;;
+    *) echo "Status: ${STATUS:-unknown} — waiting..."; sleep 2 ;;
+  esac
+done
+
+# 3. Download the result
+CREDITS=$(printf '%s' "$RESULT" | grep -o '"creditsUsed":[0-9.]*' | cut -d: -f2)
+echo "Done. Credits used: $CREDITS"
+URL=$(printf '%s' "$RESULT" | grep -o '"url":"[^"]*"' | head -1 | cut -d'"' -f4)
+EXT="${URL##*.}"; EXT="${EXT%%\?*}"
+OUT="text-to-image.${EXT:-png}"
+curl -sS -o "$OUT" "$URL"
+echo "Saved $OUT  $URL"

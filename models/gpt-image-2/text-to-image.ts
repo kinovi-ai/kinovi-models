@@ -1,0 +1,78 @@
+// text-to-image.ts — Generate an image from a text prompt with GPT Image 2 on Kinovi.
+//
+// Usage:
+//   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
+//   npx tsx text-to-image.ts               # or: node --experimental-strip-types text-to-image.ts
+//
+// No third-party dependencies. Node.js 18+.
+
+import { writeFile } from "node:fs/promises";
+
+const MODEL = "gpt-image-2";
+const INPUTS = {
+  prompt:
+    "A photorealistic close-up of a steaming cup of coffee on a wooden table, " +
+    "morning sunlight streaming through a window, shallow depth of field.",
+  aspectRatio: "1:1", // auto | 1:1 | 4:3 | 3:4 | 16:9 | 9:16
+  resolution: "1k", // 1k | 2k | 4k
+  quality: "low", // low | medium | high
+  outputFormat: "png", // png | jpeg | webp
+};
+
+// ---- you normally don't need to edit below this line ----
+
+const API_BASE = "https://kinovi.ai/api/v1";
+const API_KEY = process.env.KINOVI_API_KEY;
+if (!API_KEY) {
+  console.error("Set KINOVI_API_KEY first: export KINOVI_API_KEY=your-api-key");
+  process.exit(1);
+}
+
+type RecordInfo = {
+  taskId: string;
+  status: "waiting" | "generating" | "success" | "fail";
+  creditsUsed: number;
+  output: { url: string; width: number | null; height: number | null }[] | null;
+  error: { code: string; message: string } | null;
+};
+
+async function api<T>(method: "GET" | "POST", path: string, body?: unknown): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method,
+    headers: { Authorization: `Bearer ${API_KEY}`, "Content-Type": "application/json" },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${path}: ${await res.text()}`);
+  return res.json() as Promise<T>;
+}
+
+async function main() {
+  // 1. Submit the task
+  const { taskId } = await api<{ taskId: string }>("POST", "/jobs/createTask", { model: MODEL, inputs: INPUTS });
+  console.log(`Task created: ${taskId}`);
+
+  // 2. Poll until it reaches a terminal state (success | fail)
+  let info: RecordInfo;
+  while (true) {
+    info = await api<RecordInfo>("GET", `/jobs/recordInfo?taskId=${encodeURIComponent(taskId)}`);
+    if (info.status === "success") break;
+    if (info.status === "fail") throw new Error(`Task failed: ${JSON.stringify(info.error)}`);
+    console.log(`Status: ${info.status} — waiting...`);
+    await new Promise((r) => setTimeout(r, 2000));
+  }
+
+  // 3. Download the result
+  console.log(`Done. Credits used: ${info.creditsUsed}`);
+  const items = info.output ?? [];
+  for (const [i, item] of items.entries()) {
+    const ext = new URL(item.url).pathname.match(/\.[a-z0-9]+$/i)?.[0] ?? ".png";
+    const filename = items.length > 1 ? `text-to-image-${i}${ext}` : `text-to-image${ext}`;
+    await writeFile(filename, Buffer.from(await (await fetch(item.url)).arrayBuffer()));
+    console.log(`Saved ${filename}  (${item.width}x${item.height})  ${item.url}`);
+  }
+}
+
+main().catch((err) => {
+  console.error(err instanceof Error ? err.message : err);
+  process.exit(1);
+});

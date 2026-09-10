@@ -1,0 +1,8 @@
+.env
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.mp4
+node_modules/
+__pycache__/
