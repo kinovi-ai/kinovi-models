@@ -1,7 +1,7 @@
 <h1 align="center">NanoBanana 2</h1>
 
 <p align="center">
-  NanoBanana's image model on the Kinovi API (Gemini Flash). Text to image, or edit and composite with reference images.<br>
+  Google Gemini image model on the Kinovi API. Text to image, or edit and composite with reference images.<br>
   Fast generation at 2K or 4K.
 </p>
 
@@ -97,7 +97,7 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `model` | `string` | **required** | Must be `"nanobanana2"`. |
 | `inputs.prompt` | `string` | **required** | What to generate, or how to edit the reference image. |
 | `inputs.uploadedUrls` | `string[]` | – | Up to 9 publicly reachable reference image URLs. Omit for pure text-to-image. |
-| `inputs.aspectRatio` | `string` | `3:4` if omitted | `1:1` · `4:3` · `3:4` · `16:9` · `9:16`. Examples send `1:1`. |
+| `inputs.aspectRatio` | `string` | `3:4` | `1:1` · `4:3` · `3:4` · `16:9` · `9:16`. Examples send `1:1`. |
 | `inputs.resolution` | `string` | `2k` | `2k` · `4k`. Examples use `2k`, the cheaper tier. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
