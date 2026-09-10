@@ -71,41 +71,69 @@ More models are added as they go live on Kinovi. Browse the full catalog and cur
 
 All generation models share two endpoints. Authenticate with `Authorization: Bearer $KINOVI_API_KEY`.
 
-<table>
-  <tr>
-    <td width="80"><b>1</b></td>
-    <td><b>Submit</b><br>
-      <code>POST https://kinovi.ai/api/v1/jobs/createTask</code><br>
-      Body: <code>{ "model": "&lt;model-id&gt;", "inputs": { … } }</code> → returns <code>{ "taskId": "task_…" }</code> immediately.
-    </td>
-  </tr>
-  <tr>
-    <td><b>2</b></td>
-    <td><b>Poll</b><br>
-      <code>GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…</code><br>
-      Repeat every ~2 s until <code>status</code> is <code>success</code> or <code>fail</code>. On success, <code>output</code> is a list of <code>{ url, width, height }</code>.<br>
-      Prefer webhooks? Pass <code>callBackUrl</code> in step 1.
-    </td>
-  </tr>
-</table>
+### 1. Submit a task
 
-Credits are reserved when the task is created and refunded automatically if the upstream model fails. Every `recordInfo` response includes `creditsUsed`.
-
-<details>
-<summary><b>Minimal end-to-end example (curl)</b></summary>
+`POST https://kinovi.ai/api/v1/jobs/createTask`
 
 ```bash
-TASK_ID=$(curl -s -X POST https://kinovi.ai/api/v1/jobs/createTask \
+curl -X POST https://kinovi.ai/api/v1/jobs/createTask \
   -H "Authorization: Bearer $KINOVI_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"model":"gpt-image-2","inputs":{"prompt":"a red bicycle on a cobblestone street"}}' \
-  | grep -o '"taskId":"[^"]*"' | cut -d'"' -f4)
+  -d '{
+    "model": "gpt-image-2",
+    "inputs": { "prompt": "a red bicycle on a cobblestone street" }
+  }'
+```
 
-curl -s "https://kinovi.ai/api/v1/jobs/recordInfo?taskId=$TASK_ID" \
+Response `200 OK` — returned immediately. Credits for the task are reserved at this point.
+
+```json
+{
+  "taskId": "task_d5ibgnwdlw8fe3zpptx9mp0f"
+}
+```
+
+`inputs` is model-specific; each model folder documents its fields. Add an optional top-level `callBackUrl` if you want a webhook instead of polling.
+
+### 2. Poll for the result
+
+`GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=…`
+
+```bash
+curl "https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_d5ibgnwdlw8fe3zpptx9mp0f" \
   -H "Authorization: Bearer $KINOVI_API_KEY"
 ```
 
-</details>
+Repeat every couple of seconds while `status` is `waiting` or `generating`. Stop on `success` or `fail`.
+
+```json
+{
+  "taskId": "task_d5ibgnwdlw8fe3zpptx9mp0f",
+  "model": "gpt-image-2",
+  "status": "success",
+  "creditsUsed": 2.17,
+  "output": [
+    {
+      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/gpt_image_2_1789005123161_0.png",
+      "width": 1024,
+      "height": 1024,
+      "mediaType": "image/png"
+    }
+  ],
+  "error": null,
+  "createTime": 1789005095581,
+  "completeTime": 1789005126039
+}
+```
+
+| `status` | Meaning |
+|:--|:--|
+| `waiting` | Queued, not started yet |
+| `generating` | Running |
+| `success` | Done — results are in `output[]` |
+| `fail` | Failed — `error.code` / `error.message` explain why; credits are refunded |
+
+Video and audio models return the same shape; `output[].url` points at an `.mp4` / `.wav` and `mediaType` tells you which.
 
 <br>
 
