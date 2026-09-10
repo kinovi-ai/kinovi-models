@@ -2,11 +2,37 @@
 # image-reference.sh — Edit or restyle an existing image with GPT Image 2 on Kinovi.
 #
 # Usage:
+#   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 #   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
 #   bash image-reference.sh
 #
 # Requires only curl. No jq needed.
 set -euo pipefail
+
+# Load .env from this script's directory or any parent. Does not override existing vars.
+_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+while true; do
+  if [[ -f "$_dir/.env" ]]; then
+    while IFS= read -r line || [[ -n "$line" ]]; do
+      line="${line%$'\r'}"
+      [[ -z "$line" || "$line" == \#* || "$line" != *=* ]] && continue
+      key="${line%%=*}"
+      value="${line#*=}"
+      key="${key#"${key%%[![:space:]]*}"}"; key="${key%"${key##*[![:space:]]}"}"
+      value="${value#"${value%%[![:space:]]*}"}"; value="${value%"${value##*[![:space:]]}"}"
+      value="${value#\"}"; value="${value%\"}"
+      value="${value#\'}"; value="${value%\'}"
+      if [[ -n "$key" && -z "${!key:-}" ]]; then
+        export "$key=$value"
+      fi
+    done < "$_dir/.env"
+    break
+  fi
+  _parent="$(dirname "$_dir")"
+  [[ "$_parent" == "$_dir" ]] && break
+  _dir="$_parent"
+done
+unset _dir
 
 MODEL="gpt-image-2"
 read -r -d '' INPUTS <<'JSON' || true

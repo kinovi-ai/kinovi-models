@@ -1,12 +1,39 @@
 // text-to-image.ts — Generate an image from a text prompt with GPT Image 2 on Kinovi.
 //
 // Usage:
+//   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 //   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
 //   npx tsx text-to-image.ts               # or: node --experimental-strip-types text-to-image.ts
 //
 // No third-party dependencies. Node.js 18+.
 
+import { existsSync, readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+function loadDotenv() {
+  let folder = dirname(fileURLToPath(import.meta.url));
+  while (true) {
+    const path = join(folder, ".env");
+    if (existsSync(path)) {
+      for (const raw of readFileSync(path, "utf8").split(/\r?\n/)) {
+        const line = raw.trim();
+        if (!line || line.startsWith("#") || !line.includes("=")) continue;
+        const eq = line.indexOf("=");
+        const key = line.slice(0, eq).trim();
+        const value = line.slice(eq + 1).trim().replace(/^['"]|['"]$/g, "");
+        if (key && process.env[key] === undefined) process.env[key] = value;
+      }
+      return;
+    }
+    const parent = dirname(folder);
+    if (parent === folder) return;
+    folder = parent;
+  }
+}
+
+loadDotenv();
 
 const MODEL = "gpt-image-2";
 const INPUTS = {

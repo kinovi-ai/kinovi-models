@@ -23,6 +23,7 @@
 ## Run an example
 
 ```bash
+# Put KINOVI_API_KEY in ../../.env, or:
 export KINOVI_API_KEY=your-api-key   # https://kinovi.ai/app/api-keys
 
 python3 text-to-image.py             # Python 3.8+, stdlib only

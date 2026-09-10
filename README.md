@@ -23,7 +23,8 @@
 
 ```bash
 # 1. Get an API key → https://kinovi.ai/app/api-keys
-export KINOVI_API_KEY=your-api-key
+cp .env.example .env            # then paste KINOVI_API_KEY=...
+# or: export KINOVI_API_KEY=your-api-key
 
 # 2. Grab the examples
 git clone https://github.com/kinovi-ai/kinovi-models.git

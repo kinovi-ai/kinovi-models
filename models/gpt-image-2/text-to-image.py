@@ -2,6 +2,7 @@
 # text-to-image.py — Generate an image from a text prompt with GPT Image 2 on Kinovi.
 #
 # Usage:
+#   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
 #   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
 #   python3 text-to-image.py
 #
@@ -12,6 +13,30 @@ import os
 import sys
 import time
 import urllib.request
+
+
+def load_dotenv():
+    folder = os.path.dirname(os.path.abspath(__file__))
+    while True:
+        path = os.path.join(folder, ".env")
+        if os.path.isfile(path):
+            with open(path, encoding="utf-8-sig") as handle:
+                for raw in handle:
+                    line = raw.strip()
+                    if not line or line.startswith("#") or "=" not in line:
+                        continue
+                    key, _, value = line.partition("=")
+                    key, value = key.strip(), value.strip().strip("'").strip('"')
+                    if key and key not in os.environ:
+                        os.environ[key] = value
+            return
+        parent = os.path.dirname(folder)
+        if parent == folder:
+            return
+        folder = parent
+
+
+load_dotenv()
 
 MODEL = "gpt-image-2"
 INPUTS = {
@@ -32,7 +57,11 @@ API_KEY = os.environ.get("KINOVI_API_KEY")
 if not API_KEY:
     sys.exit("Set KINOVI_API_KEY first: export KINOVI_API_KEY=your-api-key")
 
-HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+HEADERS = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+    "User-Agent": "kinovi-models/1.0",
+}
 
 
 def api(method, path, body=None):
