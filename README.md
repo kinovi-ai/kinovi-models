@@ -70,6 +70,15 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       </td>
       <td>ByteDance</td>
     </tr>
+    <tr>
+      <td><a href="./models/nanobanana2"><b>NanoBanana 2</b></a></td>
+      <td>Image</td>
+      <td>
+        <a href="./models/nanobanana2/text-to-image.py"><code>text-to-image</code></a> ·
+        <a href="./models/nanobanana2/image-to-image.py"><code>image-to-image</code></a>
+      </td>
+      <td>NanoBanana</td>
+    </tr>
   </tbody>
 </table>
 
