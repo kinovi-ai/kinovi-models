@@ -1,14 +1,26 @@
-# GPT Image 2
+<p align="center">
+  <a href="https://kinovi.ai/models/gpt-image-2">
+    <img src="https://static.seedance2-pro.com/generated-images/2026-07-26/gpt_image_2_1785074981697_0.png" alt="Generated with GPT Image 2 on Kinovi" width="560">
+  </a>
+</p>
 
-OpenAI's GPT Image 2 on the Kinovi API. Generate images from text, or edit and restyle existing images with up to 10 reference images. Strong at photorealism, accurate in-image text, and multi-element compositions.
+<h1 align="center">GPT Image 2</h1>
 
-- Model id: `gpt-image-2`
-- Model page & pricing: <https://kinovi.ai/models/gpt-image-2>
-- Playground: <https://kinovi.ai/app/gallery?model=gpt-image-2>
+<p align="center">
+  OpenAI's image model on the Kinovi API. Text to image, or edit and restyle existing images with up to 10 references.<br>
+  Strong at photorealism, accurate in-image text, and multi-element compositions.
+</p>
+
+<p align="center">
+  <img alt="Model id" src="https://img.shields.io/badge/model-gpt--image--2-6366f1?style=flat-square">
+  <img alt="Type" src="https://img.shields.io/badge/type-image-0ea5e9?style=flat-square">
+  <img alt="From" src="https://img.shields.io/badge/from-%240.01%20%2F%20image-22c55e?style=flat-square">
+  <a href="https://kinovi.ai/models/gpt-image-2"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
+</p>
+
+<br>
 
 ## Run an example
-
-Every script is self-contained: copy one file, set your API key, run it. Each one submits a task, polls until it finishes, and saves the image next to the script.
 
 ```bash
 export KINOVI_API_KEY=your-api-key   # https://kinovi.ai/app/api-keys
@@ -18,12 +30,37 @@ npx tsx text-to-image.ts             # Node.js 18+, no dependencies
 bash text-to-image.sh                # curl only
 ```
 
-| Example | What it does | Files |
-|---|---|---|
-| Text to image | Generate a 1K square image from a prompt | [`text-to-image.py`](./text-to-image.py) · [`text-to-image.ts`](./text-to-image.ts) · [`text-to-image.sh`](./text-to-image.sh) |
-| Image reference | Restyle an existing image using `uploadedUrls` | [`image-reference.py`](./image-reference.py) · [`image-reference.ts`](./image-reference.ts) · [`image-reference.sh`](./image-reference.sh) |
+Each script submits a task, polls until it finishes, and saves the image next to the script. Edit the `INPUTS` block at the top to change the prompt or options.
 
-Edit the `INPUTS` block at the top of any script to change the prompt or options.
+<table>
+  <thead>
+    <tr>
+      <th align="left">Example</th>
+      <th align="left">What it does</th>
+      <th align="left">Python</th>
+      <th align="left">TypeScript</th>
+      <th align="left">curl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Text to image</b></td>
+      <td>Generate a 1K square image from a prompt</td>
+      <td><a href="./text-to-image.py"><code>.py</code></a></td>
+      <td><a href="./text-to-image.ts"><code>.ts</code></a></td>
+      <td><a href="./text-to-image.sh"><code>.sh</code></a></td>
+    </tr>
+    <tr>
+      <td><b>Image reference</b></td>
+      <td>Restyle an existing image via <code>uploadedUrls</code></td>
+      <td><a href="./image-reference.py"><code>.py</code></a></td>
+      <td><a href="./image-reference.ts"><code>.ts</code></a></td>
+      <td><a href="./image-reference.sh"><code>.sh</code></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
 
 ## Request
 
@@ -42,24 +79,26 @@ Edit the `INPUTS` block at the top of any script to change the prompt or options
 }
 ```
 
-| Field | Type | Default | Notes |
-|---|---|---|---|
-| `inputs.prompt` | string | required | Text description of the desired image or edit. |
-| `inputs.uploadedUrls` | string[] | – | Reference image URLs, up to 10. Must be publicly reachable. Omit for pure text-to-image. |
-| `inputs.aspectRatio` | string | `auto` | `auto`, `1:1`, `4:3`, `3:4`, `16:9`, `9:16`. `auto` follows the reference image when one is given. |
-| `inputs.resolution` | string | `1k` | `1k`, `2k`, `4k`. |
-| `inputs.quality` | string | `low` | `low`, `medium`, `high`. Together with `resolution` this decides the price. |
-| `inputs.outputFormat` | string | `png` | `png`, `jpeg`, `webp`. |
-| `inputs.background` | string | `auto` | `auto` or `opaque`. |
-| `callBackUrl` | string | – | Optional webhook called when the task finishes. |
+Returns `{ "taskId": "task_…" }`.
 
-Response: `{ "taskId": "task_..." }`
+| Field | Type | Default | Description |
+|:--|:--|:--|:--|
+| `inputs.prompt` | `string` | **required** | What to generate, or how to edit the reference image. |
+| `inputs.uploadedUrls` | `string[]` | – | Up to 10 publicly reachable reference image URLs. Omit for pure text-to-image. |
+| `inputs.aspectRatio` | `string` | `auto` | `auto` · `1:1` · `4:3` · `3:4` · `16:9` · `9:16`. `auto` follows the reference image when given. |
+| `inputs.resolution` | `string` | `1k` | `1k` · `2k` · `4k` |
+| `inputs.quality` | `string` | `low` | `low` · `medium` · `high`. With `resolution`, sets the price. |
+| `inputs.outputFormat` | `string` | `png` | `png` · `jpeg` · `webp` |
+| `inputs.background` | `string` | `auto` | `auto` · `opaque` |
+| `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
+
+<br>
 
 ## Result
 
-`GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_...`
+`GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…`
 
-Poll every couple of seconds until `status` is `success` or `fail`. A 1K image typically finishes in 20–40 seconds.
+Poll every couple of seconds until `status` is `success` or `fail`. A 1K image usually finishes in 20–40 seconds.
 
 ```json
 {
@@ -81,21 +120,38 @@ Poll every couple of seconds until `status` is `success` or `fail`. A 1K image t
 }
 ```
 
-`status` is one of `waiting`, `generating`, `success`, `fail`. On `fail`, `error.code` and `error.message` explain why and the credits are refunded.
+| `status` | Meaning |
+|:--|:--|
+| `waiting` | Queued, not started yet |
+| `generating` | Running |
+| `success` | Done — read `output[].url` |
+| `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
+
+<br>
 
 ## Pricing
 
-Price depends on `quality` × `resolution`. Both examples default to `low` / `1k`, the cheapest tier. Current per-image prices are listed on the [model page](https://kinovi.ai/models/gpt-image-2).
+Price is set by `quality` × `resolution`. Both examples default to `low` / `1k`, the cheapest tier. Live prices: [kinovi.ai/models/gpt-image-2](https://kinovi.ai/models/gpt-image-2).
 
 | | 1K | 2K | 4K |
-|---|---|---|---|
-| low | $0.010 | $0.020 | $0.030 |
-| medium | $0.060 | $0.100 | $0.180 |
-| high | $0.220 | $0.400 | $0.720 |
+|:--|--:|--:|--:|
+| **low** | $0.010 | $0.020 | $0.030 |
+| **medium** | $0.060 | $0.100 | $0.180 |
+| **high** | $0.220 | $0.400 | $0.720 |
+
+<br>
 
 ## Tips
 
-- Describe the scene in plain sentences; GPT Image 2 handles long, natural prompts well.
-- For text inside the image, quote it exactly: `a neon sign that reads "OPEN LATE"`.
-- With reference images, say what to keep and what to change: "keep the pose and outfit, change the background to a rainy street".
-- Start at `low` / `1k` to iterate on the prompt, then rerun at `high` / `2k` or `4k` for the final.
+- Write the scene as plain sentences. GPT Image 2 handles long, natural prompts well.
+- For text inside the image, quote it exactly: *a neon sign that reads "OPEN LATE"*.
+- With references, say what to keep and what to change: *keep the pose and outfit, change the background to a rainy street*.
+- Iterate at `low` / `1k`, then rerun the final prompt at `high` / `2k` or `4k`.
+
+<br>
+
+<p align="center">
+  <a href="../../README.md">← All models</a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/models/gpt-image-2">Model page</a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/app/gallery?model=gpt-image-2">Playground</a>
+</p>
