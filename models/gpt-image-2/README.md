@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://kinovi.ai/models/gpt-image-2">
-    <img src="https://static.seedance2-pro.com/generated-images/2026-07-26/gpt_image_2_1785074981697_0.png" alt="Generated with GPT Image 2 on Kinovi" width="560">
-  </a>
-</p>
-
 <h1 align="center">GPT Image 2</h1>
 
 <p align="center">
@@ -71,7 +65,7 @@ Each script submits a task, polls until it finishes, and saves the image next to
 {
   "model": "gpt-image-2",
   "inputs": {
-    "prompt": "A photorealistic close-up of a steaming cup of coffee on a wooden table.",
+    "prompt": "A photorealistic close-up of a steaming cup of coffee on a wooden table, morning sunlight streaming through a window, shallow depth of field.",
     "aspectRatio": "1:1",
     "resolution": "1k",
     "quality": "low",
