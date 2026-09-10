@@ -97,6 +97,15 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       </td>
       <td>Midjourney</td>
     </tr>
+    <tr>
+      <td><a href="./models/midjourney-v7-niji"><b>Midjourney Niji V7</b></a></td>
+      <td>Image</td>
+      <td>
+        <a href="./models/midjourney-v7-niji/text-to-image.py"><code>text-to-image</code></a> ·
+        <a href="./models/midjourney-v7-niji/image-to-image.py"><code>image-to-image</code></a>
+      </td>
+      <td>Midjourney</td>
+    </tr>
   </tbody>
 </table>
 
