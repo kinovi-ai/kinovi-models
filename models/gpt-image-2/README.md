@@ -79,7 +79,25 @@ Each script submits a task, polls until it finishes, and saves the image next to
 }
 ```
 
-Returns `{ "taskId": "task_…" }`.
+Response `200 OK` — the task is queued and credits are reserved. Use `taskId` to poll for the result.
+
+```json
+{
+  "taskId": "task_d5ibgnwdlw8fe3zpptx9mp0f"
+}
+```
+
+<details>
+<summary>Error responses</summary>
+
+| HTTP | Body | When |
+|:--|:--|:--|
+| `400` | `{ "message": "Invalid inputs for model", "errors": [ … ] }` | A field is missing or has an unsupported value; `errors` lists each one. |
+| `401` | `{ "message": "Invalid API Key" }` | Missing or wrong `Authorization` header. |
+| `402` | `{ "message": "Insufficient credits", "required": 2.17, "available": 0 }` | Not enough credits for this quality × resolution. |
+| `429` | `{ "message": "Concurrency limit reached (…)", "limit": 5, "current": 5 }` | Too many tasks in progress; wait for one to finish. |
+
+</details>
 
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
