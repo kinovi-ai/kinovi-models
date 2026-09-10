@@ -98,7 +98,7 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `inputs.prompt` | `string` | **required** | What to generate, or how to edit the reference image. |
 | `inputs.uploadedUrls` | `string[]` | – | Up to 9 publicly reachable reference image URLs. Omit for pure text-to-image. |
 | `inputs.aspectRatio` | `string` | `3:4` if omitted | `1:1` · `4:3` · `3:4` · `16:9` · `9:16`. Examples send `1:1`. |
-| `inputs.resolution` | `string` | `2k` | `2k` · `4k` only. `1k` is rejected. Examples use `2k`, the cheaper tier. |
+| `inputs.resolution` | `string` | `2k` | `2k` · `4k`. Examples use `2k`, the cheaper tier. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
 <br>
