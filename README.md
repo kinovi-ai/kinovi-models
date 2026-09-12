@@ -71,6 +71,15 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>OpenAI</td>
     </tr>
     <tr>
+      <td><a href="./models/gpt-image-2.5-flare"><b>GPT Image 2.5 Flare</b></a></td>
+      <td>Image</td>
+      <td>
+        <a href="./models/gpt-image-2.5-flare/text-to-image.py"><code>text-to-image</code></a> ·
+        <a href="./models/gpt-image-2.5-flare/image-to-image.py"><code>image-to-image</code></a>
+      </td>
+      <td>OpenAI</td>
+    </tr>
+    <tr>
       <td><a href="./models/seedream-5.0-pro"><b>Seedream 5.0 Pro</b></a></td>
       <td>Image</td>
       <td>
