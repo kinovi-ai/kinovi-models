@@ -8,3 +8,6 @@
 *.mp4
 node_modules/
 __pycache__/
+
+# Local dev-verification runs against dev.kinovi.ai (never committed).
+.local-verify/
