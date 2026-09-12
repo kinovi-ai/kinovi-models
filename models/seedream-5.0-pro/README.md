@@ -98,7 +98,7 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `model` | `string` | **required** | Must be `"seedream-5.0-pro"`. |
 | `inputs.prompt` | `string` | **required** | What to generate, or how to edit the reference image. Max 10,000 characters. |
 | `inputs.uploadedUrls` | `string[]` | – | Up to 10 publicly reachable reference image URLs. Omit for pure text-to-image. |
-| `inputs.aspectRatio` | `string` | `auto` | `auto` · `1:1` · `4:3` · `3:4` · `16:9` · `9:16` · `3:2` · `2:3` · `21:9`. `auto` follows the reference image when given. |
+| `inputs.aspectRatio` | `string` | `auto` | `auto` · `1:1` · `4:3` · `3:4` · `16:9` · `9:16` · `3:2` · `2:3` · `21:9`. `auto` keeps the reference image's aspect ratio when one is given; the output size still follows `resolution`, not the source resolution. |
 | `inputs.resolution` | `string` | `2k` | `1k` · `2k`. Examples use `1k`, the cheaper tier. |
 | `inputs.outputFormat` | `string` | `png` | `png` · `jpeg` |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
