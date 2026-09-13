@@ -94,16 +94,46 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
 | `model` | `string` | **required** | Must be `"midjourney-v7-niji"`. |
-| `inputs.prompt` | `string` | **required** | What to generate, or how to restyle the reference image. |
-| `inputs.uploadedUrls` | `string[]` | – | At most 1 publicly reachable reference image URL. Omit for pure text-to-image. |
-| `inputs.aspectRatio` | `string` | – | `1:1` · `3:2` · `2:3` · `4:3` · `3:4` · `4:5` · `5:4` · `16:9` · `9:16` · `21:9` |
+| `inputs.prompt` | `string` | **required** | What to generate, or how to restyle the reference image. Capped at 6,000 characters — see [Prompt limit](#prompt-limit). |
+| `inputs.uploadedUrls` | `string[]` | – | At most 1 publicly reachable reference image URL. Omit for pure text-to-image. A URL that cannot be fetched is ignored; the task still runs without the reference. |
+| `inputs.aspectRatio` | `string` | `1:1` | `1:1` · `3:2` · `2:3` · `4:3` · `3:4` · `4:5` · `5:4` · `16:9` · `9:16` · `21:9`. A value outside this list is not rejected — the task runs at `1:1`. Each value maps to a fixed output size; see below. |
 | `inputs.stylize` | `integer` | – | Optional. 0–1000. Higher is more stylized. |
 | `inputs.chaos` | `integer` | – | Optional. 0–100. Higher is more varied. |
 | `inputs.weird` | `integer` | – | Optional. 0–3000. Adds unconventional aesthetics. |
-| `inputs.style` | `string` | – | Optional. `raw` for less opinionated results. |
+| `inputs.quality` | `number` | – | Optional. One of `0.25` · `0.5` · `1`; any other value is rejected with `400`. |
+| `inputs.style` | `string` | – | Optional. `raw` for less opinionated results. Only `raw` is accepted; any other value is rejected with `400`. |
 | `inputs.no` | `string` | – | Optional. Negative prompt. |
 | `inputs.seed` | `integer` | – | Optional. 0–4294967295. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
+
+### Output sizes
+
+`aspectRatio` sets a fixed output size; images are not cropped after the fact.
+
+| `aspectRatio` | Output | `aspectRatio` | Output |
+|:--|:--|:--|:--|
+| `1:1` | 1024×1024 | `4:5` | 960×1200 |
+| `3:2` | 1344×896 | `5:4` | 1200×960 |
+| `2:3` | 896×1344 | `16:9` | 1456×816 |
+| `4:3` | 1232×928 | `9:16` | 816×1456 |
+| `3:4` | 928×1232 | `21:9` | 1680×720 |
+
+### Prompt limit
+
+The 6,000 character cap is applied to your prompt **plus the flags the API appends for the other
+inputs**, not to the prompt on its own — so the room left for your prompt shrinks as you add
+options. With `"aspectRatio": "1:1"` (the API appends ` --ar 1:1`, 9 characters) the cap lands on
+the prompt length exactly:
+
+| Prompt length | Options | Result |
+|:--|:--|:--|
+| 6,000 | none | accepted |
+| 5,991 | `"aspectRatio": "1:1"` | accepted |
+| 5,992 | `"aspectRatio": "1:1"` | rejected |
+
+The check runs after the task is accepted: `createTask` returns `200`, then the task ends `fail`
+with `Prompts must be 6000 or fewer in length.` Credits are refunded. Leave headroom below 6,000 if
+you set other options.
 
 <br>
 
