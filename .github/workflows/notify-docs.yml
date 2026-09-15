@@ -1,0 +1,35 @@
+name: Notify docs site
+
+# Tells github.com/Be-As-One/seedance2-pro.com to regenerate its /docs/models
+# pages from this repository. The receiving workflow is
+# `.github/workflows/sync-kinovi-models-docs.yml` over there.
+#
+# Requires a repository secret `DOCS_REPO_TOKEN`: a fine-grained PAT scoped to
+# Be-As-One/seedance2-pro.com with "Contents: read and write" (repository_dispatch
+# needs write). Without the secret this job is skipped and the docs site falls
+# back to its hourly scheduled sync.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "models/**"
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Dispatch kinovi-models-updated
+        env:
+          TOKEN: ${{ secrets.DOCS_REPO_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "DOCS_REPO_TOKEN not set; docs site will pick this up on its hourly schedule."
+            exit 0
+          fi
+          curl --fail-with-body -sS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $TOKEN" \
+            https://api.github.com/repos/Be-As-One/seedance2-pro.com/dispatches \
+            -d "{\"event_type\":\"kinovi-models-updated\",\"client_payload\":{\"ref\":\"${GITHUB_REF_NAME}\",\"sha\":\"${GITHUB_SHA}\"}}"
