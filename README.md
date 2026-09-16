@@ -89,6 +89,16 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>ByteDance</td>
     </tr>
     <tr>
+      <td><a href="./models/seedance-20"><b>Seedance 2.0</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/seedance-20/text-to-video.py"><code>text-to-video</code></a> ·
+        <a href="./models/seedance-20/image-to-video.py"><code>image-to-video</code></a> ·
+        <a href="./models/seedance-20/reference-to-video.py"><code>reference-to-video</code></a>
+      </td>
+      <td>ByteDance</td>
+    </tr>
+    <tr>
       <td><a href="./models/nanobanana2"><b>NanoBanana 2</b></a></td>
       <td>Image</td>
       <td>
