@@ -151,25 +151,25 @@ Poll every couple of seconds until `status` is `success` or `fail`. Midjourney j
   "creditsUsed": 12,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/generated-images/task_u91bn4h34rr0zy2m5o9z31si-0.png",
+      "url": "https://static.kinovi.ai/generated-images/task_u91bn4h34rr0zy2m5o9z31si-0.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/task_u91bn4h34rr0zy2m5o9z31si-1.png",
+      "url": "https://static.kinovi.ai/generated-images/task_u91bn4h34rr0zy2m5o9z31si-1.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/task_u91bn4h34rr0zy2m5o9z31si-2.png",
+      "url": "https://static.kinovi.ai/generated-images/task_u91bn4h34rr0zy2m5o9z31si-2.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/task_u91bn4h34rr0zy2m5o9z31si-3.png",
+      "url": "https://static.kinovi.ai/generated-images/task_u91bn4h34rr0zy2m5o9z31si-3.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"

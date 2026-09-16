@@ -45,7 +45,7 @@ INPUTS = {
         "Keep the composition and colors, add loose brush strokes and paper texture."
     ),
     "uploadedUrls": [
-        "https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png",
+        "https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png",
     ],
     "aspectRatio": "auto",
     "resolution": "1k",

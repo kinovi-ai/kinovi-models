@@ -38,7 +38,7 @@ MODEL="seedance-20"
 read -r -d '' INPUTS <<'JSON' || true
 {
   "prompt": "Bring this image to life: a slow push-in on the subject, gentle wind moving the details, soft natural light shifting across the scene.",
-  "imageUrls": ["https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png"],
+  "imageUrls": ["https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png"],
   "duration": 5,
   "outputResolution": "720p"
 }

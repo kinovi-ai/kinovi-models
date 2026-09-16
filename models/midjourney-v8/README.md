@@ -151,25 +151,25 @@ Poll every couple of seconds until `status` is `success` or `fail`. Midjourney j
   "creditsUsed": 12,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/midjourney_v8_0.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_0.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/midjourney_v8_1.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_1.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/midjourney_v8_2.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_2.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/midjourney_v8_3.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_3.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"

@@ -117,7 +117,7 @@ Poll every couple of seconds until `status` is `success` or `fail`.
   "creditsUsed": 15,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/nanobanana2_1789011925743.jpg",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/nanobanana2_1789011925743.jpg",
       "width": 2048,
       "height": 2048,
       "mediaType": "image/jpeg"

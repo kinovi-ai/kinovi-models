@@ -42,7 +42,7 @@ const INPUTS = {
     "details, soft natural light shifting across the scene.",
   // One image = opening frame. Two images = first and last frame.
   // For 3-9 reference images add mode: "reference". Replace with your own URLs.
-  imageUrls: ["https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png"],
+  imageUrls: ["https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png"],
   duration: 5, // 4-15 seconds, billed per second
   outputResolution: "720p", // 480p | 720p | 1080p | 4k
   // Omit aspectRatio to follow the image's ratio; set 16:9 | 9:16 | 1:1 | 4:3 | 3:4 | 21:9 to force one.

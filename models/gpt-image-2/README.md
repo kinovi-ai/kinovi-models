@@ -122,7 +122,7 @@ Poll every couple of seconds until `status` is `success` or `fail`. A 1K image u
   "creditsUsed": 2.17,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-10/gpt_image_2_1789005123161_0.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-10/gpt_image_2_1789005123161_0.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"

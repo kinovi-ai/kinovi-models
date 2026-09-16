@@ -146,7 +146,7 @@ Poll every couple of seconds until `status` is `success` or `fail`. Video genera
   "creditsUsed": 200,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/videos/seedance_video_1789011790741_17cd129c.mp4",
+      "url": "https://static.kinovi.ai/videos/seedance_video_1789011790741_17cd129c.mp4",
       "width": 1280,
       "height": 720,
       "mediaType": "video/mp4"

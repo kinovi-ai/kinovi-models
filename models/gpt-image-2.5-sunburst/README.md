@@ -130,7 +130,7 @@ While the job is running, `creditsUsed` shows the **precharge estimate** (for ex
   "creditsUsed": 1.82,
   "output": [
     {
-      "url": "https://static.seedance2-pro.com/generated-images/2026-09-12/gpt_image_2_5_sunburst_0.png",
+      "url": "https://static.kinovi.ai/generated-images/2026-09-12/gpt_image_2_5_sunburst_0.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"

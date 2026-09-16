@@ -46,7 +46,7 @@ INPUTS = {
     ),
     # Up to 9 publicly reachable image URLs. Replace with your own.
     "uploadedUrls": [
-        "https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png",
+        "https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png",
     ],
     "aspectRatio": "1:1",   # 1:1 | 4:3 | 3:4 | 16:9 | 9:16
     "resolution": "2k",     # 2k | 4k

@@ -47,7 +47,7 @@ INPUTS = {
     # One image = opening frame. Two images = first and last frame.
     # For 3-9 reference images add "mode": "reference". Replace with your own URLs.
     "imageUrls": [
-        "https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png",
+        "https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png",
     ],
     "duration": 5,                # 4-15 seconds, billed per second
     "outputResolution": "720p",   # 480p | 720p | 1080p | 4k

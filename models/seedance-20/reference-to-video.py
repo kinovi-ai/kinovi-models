@@ -47,7 +47,7 @@ INPUTS = {
     # Up to 3 reference videos, 15 s combined. Any video switches to reference mode
     # and to the reference-video price tier. You can add imageUrls / audioUrls too.
     "videoUrls": [
-        "https://static.seedance2-pro.com/videos/seedance_video_1775631198994_17cd129c.mp4",
+        "https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4",
     ],
     "mode": "reference",
     "duration": 5,                # 4-15 seconds, billed per second

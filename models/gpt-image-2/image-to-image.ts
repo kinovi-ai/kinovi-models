@@ -41,7 +41,7 @@ const INPUTS = {
     "Turn this photo into a soft watercolor illustration. " +
     "Keep the composition and colors, add loose brush strokes and paper texture.",
   // Up to 10 publicly reachable image URLs. Replace with your own.
-  uploadedUrls: ["https://static.seedance2-pro.com/materials/20260705/1783247738434-3a5b9fbb.png"],
+  uploadedUrls: ["https://static.kinovi.ai/materials/20260705/1783247738434-3a5b9fbb.png"],
   aspectRatio: "auto", // auto keeps the source ratio
   resolution: "1k", // 1k | 2k | 4k
   quality: "low", // low | medium | high

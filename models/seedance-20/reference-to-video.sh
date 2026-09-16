@@ -38,7 +38,7 @@ MODEL="seedance-20"
 read -r -d '' INPUTS <<'JSON' || true
 {
   "prompt": "Follow the hand movement and camera framing of the reference video, but restyle it as claymation with warm studio lighting and a pastel backdrop.",
-  "videoUrls": ["https://static.seedance2-pro.com/videos/seedance_video_1775631198994_17cd129c.mp4"],
+  "videoUrls": ["https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4"],
   "mode": "reference",
   "duration": 5,
   "outputResolution": "720p"
