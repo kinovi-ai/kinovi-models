@@ -12,13 +12,13 @@
   <a href="https://kinovi.ai/models/gpt-image-2.5-flare"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models/gpt-image-2.5-flare](https://kinovi.ai/docs/models/gpt-image-2.5-flare) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2.5-flare) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys)
+**Full docs** [kinovi.ai/docs/models/gpt-image-2.5-flare](https://kinovi.ai/docs/models/gpt-image-2.5-flare) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2.5-flare) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
 
 **Contents**
 
 - [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors
-- [Result](#result) — polling, response shape
+- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images)
+- [Result](#result) — polling, response shape · [Output fields](#output-fields)
 - [Pricing](#pricing) — ~$1.75 / image (estimate)
 
 <br>
@@ -119,6 +119,38 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `inputs.outputCompression` | `integer` | – | `0`–`100` for `jpeg` only. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
+### Full request
+
+Only `model` and `inputs.prompt` are required; the other fields are shown at their defaults. `outputCompression` only applies with `outputFormat: "jpeg"`. Drop `uploadedUrls` for text-to-image.
+
+<details>
+<summary>All fields</summary>
+
+```json
+{
+  "model": "gpt-image-2.5-flare",
+  "inputs": {
+    "prompt": "A photorealistic close-up of a steaming cup of coffee on a wooden table, morning sunlight streaming through a window, shallow depth of field.",
+    "uploadedUrls": [
+      "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-0.png"
+    ],
+    "aspectRatio": "auto",
+    "resolution": "1k",
+    "quality": "low",
+    "outputFormat": "png",
+    "background": "auto",
+    "outputCompression": 80
+  },
+  "callBackUrl": "https://example.com/hooks/kinovi"
+}
+```
+
+</details>
+
+### Reference images
+
+`inputs.uploadedUrls` takes up to **16** image URLs. Each must be a URL the generation backend can fetch at request time — a public CDN, object storage, or a Kinovi upload. Localhost, private networks and URLs that need a login do not work. For files on your own machine, upload them first ([docs: Uploading assets](https://kinovi.ai/docs/uploads)): `POST /api/v1/uploads` returns an `uploadUrl` to `PUT` the bytes to and the public `url` to pass here; uploads are kept for 24 hours.
+
 <br>
 
 ## Result
@@ -157,6 +189,17 @@ While the job is running, `creditsUsed` shows the **precharge estimate** (for ex
 | `generating` | Running |
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
+
+### Output fields
+
+`output` has one item. `resolution` is a tier, so always read `width` / `height` from the response rather than assuming a size.
+
+| Field | Type | Description |
+|:--|:--|:--|
+| `output[].url` | `string` | Download URL of the generated file. Stored by Kinovi; not subject to the 24-hour rule that applies to uploads. |
+| `output[].width` | `integer` | Pixel width of the file. |
+| `output[].height` | `integer` | Pixel height of the file. |
+| `output[].mediaType` | `string` | `image/png` or `image/jpeg`, following `outputFormat`. |
 
 <br>
 

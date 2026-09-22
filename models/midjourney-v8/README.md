@@ -12,13 +12,13 @@
   <a href="https://kinovi.ai/models/midjourney-v8"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models/midjourney-v8](https://kinovi.ai/docs/models/midjourney-v8) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=midjourney-v8) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys)
+**Full docs** [kinovi.ai/docs/models/midjourney-v8](https://kinovi.ai/docs/models/midjourney-v8) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=midjourney-v8) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
 
 **Contents**
 
 - [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors · [Output sizes](#output-sizes)
-- [Result](#result) — polling, response shape · [Error codes](#error-codes)
+- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images) · [Output sizes](#output-sizes)
+- [Result](#result) — polling, response shape · [Output fields](#output-fields) · [Error codes](#error-codes)
 - [Pricing](#pricing) — $0.0565 / 4 images
 
 <br>
@@ -116,6 +116,41 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `inputs.autoFix` | `boolean` | `true` | Automatically fix prompts Midjourney rejects, so more tasks succeed. Set `false` to get the rejection as a `fail` instead. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
+### Full request
+
+Only `model` and `inputs.prompt` are required. The optional fields below are shown with typical values, not defaults — Midjourney's own defaults apply when they are omitted.
+
+<details>
+<summary>All fields</summary>
+
+```json
+{
+  "model": "midjourney-v8",
+  "inputs": {
+    "prompt": "A photorealistic close-up of a steaming cup of coffee on a wooden table, morning sunlight streaming through a window, shallow depth of field.",
+    "uploadedUrls": [
+      "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-0.png"
+    ],
+    "aspectRatio": "1:1",
+    "stylize": 100,
+    "chaos": 0,
+    "weird": 0,
+    "quality": 1,
+    "style": "raw",
+    "no": "text, watermark",
+    "seed": 1234,
+    "autoFix": true
+  },
+  "callBackUrl": "https://example.com/hooks/kinovi"
+}
+```
+
+</details>
+
+### Reference images
+
+`inputs.uploadedUrls` takes at most **one** image URL. Each must be a URL the generation backend can fetch at request time — a public CDN, object storage, or a Kinovi upload. Localhost, private networks and URLs that need a login do not work. For files on your own machine, upload them first ([docs: Uploading assets](https://kinovi.ai/docs/uploads)): `POST /api/v1/uploads` returns an `uploadUrl` to `PUT` the bytes to and the public `url` to pass here; uploads are kept for 24 hours. A URL that cannot be fetched is dropped and the task runs as text-to-image; an image rejected by Midjourney's image filters ends the task in `fail` (see [Error codes](#error-codes)).
+
 ### Output sizes
 
 `aspectRatio` sets a fixed output size; images are not cropped after the fact.
@@ -180,6 +215,17 @@ Poll every 5–10 seconds until `status` is `success` or `fail`. Most tasks fini
 | `generating` | Running |
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
+
+### Output fields
+
+`output` always has **four** items, one per image in the grid. `width` / `height` follow the [output size](#output-sizes) for the aspect ratio.
+
+| Field | Type | Description |
+|:--|:--|:--|
+| `output[].url` | `string` | Download URL of the generated file. Stored by Kinovi; not subject to the 24-hour rule that applies to uploads. |
+| `output[].width` | `integer` | Pixel width of the file. |
+| `output[].height` | `integer` | Pixel height of the file. |
+| `output[].mediaType` | `string` | `image/png` |
 
 `creditsUsed` is the amount reserved at submit; `recordInfo` does not carry a refund flag, so a `fail` still shows the original `creditsUsed` even though the credits are back in your balance.
 

@@ -241,6 +241,60 @@ Repeat every couple of seconds while `status` is `waiting` or `generating`. Stop
 
 Video and audio models return the same shape; `output[].url` points at an `.mp4` / `.wav` and `mediaType` tells you which.
 
+| Field | Type | Description |
+|:--|:--|:--|
+| `taskId` | `string` | The id you submitted. |
+| `model` | `string` | The `model` you sent. |
+| `status` | `string` | `waiting` · `generating` · `success` · `fail`. |
+| `creditsUsed` | `number` | Credits reserved for the task. Not adjusted on refund — a `fail` still shows the original amount. |
+| `output` | `object[] \| null` | `null` until `success`. Each item has `url`, `width`, `height`, `mediaType`; video models add `seed` and `lastFrameImage`. Each model README lists its exact fields under **Output fields**. |
+| `error` | `object \| null` | `null` unless `fail`; then `{ code, message }`. Each model README lists the codes it can return. |
+| `createTime` | `number` | Unix ms when the task was accepted. |
+| `completeTime` | `number \| null` | Unix ms when it reached `success` / `fail`. |
+
+### 3. Webhook instead of polling (optional)
+
+Add a top-level `callBackUrl` to `createTask` and Kinovi `POST`s once when the task reaches `success` or `fail`. The body wraps the same object `recordInfo` returns:
+
+```json
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "taskId": "task_d5ibgnwdlw8fe3zpptx9mp0f",
+    "model": "gpt-image-2",
+    "status": "success",
+    "creditsUsed": 2.17,
+    "output": [ { "url": "…", "width": 1024, "height": 1024, "mediaType": "image/png" } ],
+    "error": null,
+    "createTime": 1789005095581,
+    "completeTime": 1789005126039
+  }
+}
+```
+
+Respond with any `2xx`. The callback is sent once and not retried, so keep `recordInfo` as the source of truth if delivery matters. Full reference: [kinovi.ai/docs/api#webhooks](https://kinovi.ai/docs/api#webhooks).
+
+### Reference files
+
+Models take reference images, video and audio as URLs. Any URL the generation backend can fetch works — your CDN, object storage, a public site. For files on your machine, upload them to Kinovi first:
+
+```bash
+# 1. ask for an upload URL (metadata only)
+curl -s -X POST https://kinovi.ai/api/v1/uploads \
+  -H "Authorization: Bearer $KINOVI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "fileName": "reference.png" }'
+# → { "uploadUrl": "https://…", "url": "https://static.…/temp-uploads/…png", "contentType": "image/png", … }
+
+# 2. PUT the raw bytes to uploadUrl (no API key; the URL is signed)
+curl -s -X PUT "$UPLOAD_URL" -H "Content-Type: image/png" --data-binary @reference.png
+
+# 3. pass "url" in the model's reference field (uploadedUrls / imageUrls / …)
+```
+
+Uploads are deleted after 24 hours; generated outputs are not. There is no file-size limit on Kinovi's side. Full reference, with Python and Node helpers: [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads).
+
 <br>
 
 ## Repository layout

@@ -12,13 +12,13 @@
   <a href="https://kinovi.ai/models/seedance-20"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models](https://kinovi.ai/docs/models) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=seedance-20) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys)
+**Full docs** [kinovi.ai/docs/models](https://kinovi.ai/docs/models) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=seedance-20) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
 
 **Contents**
 
 - [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors · [Reference media](#reference-media)
-- [Result](#result) — polling, response shape · [Output size](#output-size)
+- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference media](#reference-media)
+- [Result](#result) — polling, response shape · [Output fields](#output-fields) · [Error codes](#error-codes) · [Output size](#output-size)
 - [Pricing](#pricing) — $0.0707 / s
 
 <br>
@@ -156,6 +156,37 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 
 Unknown `inputs` keys are ignored silently (no `400`), so a typo in a field name — `aspect_ratio` instead of `aspectRatio` — falls back to the default rather than failing.
 
+### Full request
+
+Only `model` and `inputs.prompt` are required; the other fields are shown at their defaults (`bitrate_mode` has no default — omit it for the standard bitrate). Any entry in `videoUrls` or `audioUrls` switches `mode` to `reference`; see [Reference media](#reference-media). Drop `imageUrls` for text-to-video.
+
+<details>
+<summary>All fields</summary>
+
+```json
+{
+  "model": "seedance-20",
+  "inputs": {
+    "prompt": "The camera slowly pushes in as steam rises from the cup and sunlight flickers across the table.",
+    "imageUrls": [
+      "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-0.png"
+    ],
+    "videoUrls": [],
+    "audioUrls": [],
+    "mode": "keyframe",
+    "duration": 5,
+    "outputResolution": "720p",
+    "aspectRatio": "16:9",
+    "generate_audio": true,
+    "bitrate_mode": "high",
+    "seed": -1
+  },
+  "callBackUrl": "https://example.com/hooks/kinovi"
+}
+```
+
+</details>
+
 ### Reference media
 
 | You send | Mode | Result |
@@ -211,7 +242,22 @@ Poll every couple of seconds until `status` is `success` or `fail`. A short clip
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
 
+### Output fields
+
+`output` has exactly one item.
+
+| Field | Type | Description |
+|:--|:--|:--|
+| `output[0].url` | `string` | The `.mp4` (H.264, 24 fps, AAC). Stored by Kinovi; not subject to the 24-hour rule that applies to uploads. |
+| `output[0].width` | `integer` | Pixel width — see [Output size](#output-size). |
+| `output[0].height` | `integer` | Pixel height. |
+| `output[0].mediaType` | `string` | `video/mp4`. |
+| `output[0].seed` | `integer` | The seed actually used, whether you set one or not. |
+| `output[0].lastFrameImage` | `string` | PNG of the final frame at the video's resolution. Use it as `imageUrls[0]` of a follow-up `keyframe` task to continue the shot. |
+
 `creditsUsed` is the amount reserved at submit; `recordInfo` does not carry a refund flag, so a `fail` still shows the original `creditsUsed` even though the credits are back in your balance.
+
+### Error codes
 
 <details>
 <summary>Error codes seen in <code>fail</code></summary>
