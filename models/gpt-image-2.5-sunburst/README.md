@@ -12,6 +12,21 @@
   <a href="https://kinovi.ai/models/gpt-image-2.5-sunburst"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
+<table align="center">
+  <tr>
+    <th align="left">Try it</th>
+    <th align="left">Price</th>
+    <th align="left">Full docs</th>
+    <th align="left">API key</th>
+  </tr>
+  <tr>
+    <td><a href="https://kinovi.ai/app/gallery?model=gpt-image-2.5-sunburst">Playground</a> · <a href="https://kinovi.ai/models/gpt-image-2.5-sunburst">Model page</a></td>
+    <td>~$1.75 / image (estimate) · <a href="#pricing">details</a></td>
+    <td><a href="https://kinovi.ai/docs/models/gpt-image-2.5-sunburst">kinovi.ai/docs/models/gpt-image-2.5-sunburst</a></td>
+    <td><a href="https://kinovi.ai/app/api-keys">kinovi.ai/app/api-keys</a></td>
+  </tr>
+</table>
+
 <br>
 
 ## Run an example
