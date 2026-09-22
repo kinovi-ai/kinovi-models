@@ -159,6 +159,58 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>ByteDance</td>
     </tr>
     <tr>
+      <td><a href="./models/wan3.0-text-to-video"><b>Wan 3.0 Text-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-text-to-video/text-to-video.py"><code>text-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
+      <td><a href="./models/wan3.0-image-to-video"><b>Wan 3.0 Image-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-image-to-video/image-to-video.py"><code>image-to-video</code></a> ·
+        <a href="./models/wan3.0-image-to-video/first-last-frame-to-video.py"><code>first-last-frame-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
+      <td><a href="./models/wan3.0-ref-to-video"><b>Wan 3.0 Reference-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-ref-to-video/omni-reference-to-video.py"><code>omni-reference-to-video</code></a> ·
+        <a href="./models/wan3.0-ref-to-video/reference-to-video.py"><code>reference-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
+      <td><a href="./models/wan3.0-prime-text-to-video"><b>Wan 3.0 Prime Text-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-prime-text-to-video/text-to-video.py"><code>text-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
+      <td><a href="./models/wan3.0-prime-image-to-video"><b>Wan 3.0 Prime Image-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-prime-image-to-video/image-to-video.py"><code>image-to-video</code></a> ·
+        <a href="./models/wan3.0-prime-image-to-video/first-last-frame-to-video.py"><code>first-last-frame-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
+      <td><a href="./models/wan3.0-prime-ref-to-video"><b>Wan 3.0 Prime Reference-to-Video</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/wan3.0-prime-ref-to-video/omni-reference-to-video.py"><code>omni-reference-to-video</code></a> ·
+        <a href="./models/wan3.0-prime-ref-to-video/reference-to-video.py"><code>reference-to-video</code></a>
+      </td>
+      <td>Alibaba</td>
+    </tr>
+    <tr>
       <td><a href="./models/nanobanana2"><b>NanoBanana 2</b></a></td>
       <td>Image</td>
       <td>
@@ -275,7 +327,7 @@ Video and audio models return the same shape; `output[].url` points at an `.mp4`
 | `model` | `string` | The `model` you sent. |
 | `status` | `string` | `waiting` · `generating` · `success` · `fail`. |
 | `creditsUsed` | `number` | Credits reserved for the task. Not adjusted on refund — a `fail` still shows the original amount. |
-| `output` | `object[] \| null` | `null` until `success`. Each item has `url`, `width`, `height`, `mediaType`; video models add `seed` and `lastFrameImage`. Each model README lists its exact fields under **Output fields**. |
+| `output` | `object[] \| null` | `null` until `success`. Each item has `url`, `width`, `height`, `mediaType`; some video models add `seed` and `lastFrameImage`. Each model README lists its exact fields under **Output fields**. |
 | `error` | `object \| null` | `null` unless `fail`; then `{ code, message }`. Each model README lists the codes it can return. |
 | `createTime` | `number` | Unix ms when the task was accepted. |
 | `completeTime` | `number \| null` | Unix ms when it reached `success` / `fail`. |
