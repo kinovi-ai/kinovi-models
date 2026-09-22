@@ -12,20 +12,14 @@
   <a href="https://kinovi.ai/models/nano-banana-pro"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-<table align="center">
-  <tr>
-    <th align="left">Try it</th>
-    <th align="left">Price</th>
-    <th align="left">Full docs</th>
-    <th align="left">API key</th>
-  </tr>
-  <tr>
-    <td><a href="https://kinovi.ai/app/gallery?model=nanobanana-pro">Playground</a> · <a href="https://kinovi.ai/models/nanobanana-pro">Model page</a></td>
-    <td>$0.0670 / image · <a href="#pricing">details</a></td>
-    <td><a href="https://kinovi.ai/docs/models/nanobanana-pro">kinovi.ai/docs/models/nanobanana-pro</a></td>
-    <td><a href="https://kinovi.ai/app/api-keys">kinovi.ai/app/api-keys</a></td>
-  </tr>
-</table>
+**Full docs** [kinovi.ai/docs/models/nanobanana-pro](https://kinovi.ai/docs/models/nanobanana-pro) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=nanobanana-pro) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys)
+
+**Contents**
+
+- [Run an example](#run-an-example) — Python, TypeScript and curl scripts
+- [Request](#request) — endpoint, fields, validation errors
+- [Result](#result) — polling, response shape
+- [Pricing](#pricing) — $0.0670 / image
 
 <br>
 

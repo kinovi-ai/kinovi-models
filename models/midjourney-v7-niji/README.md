@@ -12,20 +12,14 @@
   <a href="https://kinovi.ai/models/midjourney-v7-niji"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-<table align="center">
-  <tr>
-    <th align="left">Try it</th>
-    <th align="left">Price</th>
-    <th align="left">Full docs</th>
-    <th align="left">API key</th>
-  </tr>
-  <tr>
-    <td><a href="https://kinovi.ai/app/gallery?model=midjourney-v7-niji">Playground</a> · <a href="https://kinovi.ai/models/midjourney-v7-niji">Model page</a></td>
-    <td>$0.0565 / 4 images · <a href="#pricing">details</a></td>
-    <td><a href="https://kinovi.ai/docs/models/midjourney-v7-niji">kinovi.ai/docs/models/midjourney-v7-niji</a></td>
-    <td><a href="https://kinovi.ai/app/api-keys">kinovi.ai/app/api-keys</a></td>
-  </tr>
-</table>
+**Full docs** [kinovi.ai/docs/models/midjourney-v7-niji](https://kinovi.ai/docs/models/midjourney-v7-niji) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=midjourney-v7-niji) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys)
+
+**Contents**
+
+- [Run an example](#run-an-example) — Python, TypeScript and curl scripts
+- [Request](#request) — endpoint, fields, validation errors · [Output sizes](#output-sizes)
+- [Result](#result) — polling, response shape · [Error codes](#error-codes)
+- [Pricing](#pricing) — $0.0565 / 4 images
 
 <br>
 
