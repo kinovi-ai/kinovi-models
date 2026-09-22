@@ -94,7 +94,11 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>
         <a href="./models/seedance-20/text-to-video.py"><code>text-to-video</code></a> ·
         <a href="./models/seedance-20/image-to-video.py"><code>image-to-video</code></a> ·
-        <a href="./models/seedance-20/reference-to-video.py"><code>reference-to-video</code></a>
+        <a href="./models/seedance-20/first-last-frame-to-video.py"><code>first-last-frame-to-video</code></a> ·
+        <a href="./models/seedance-20/omni-reference-to-video.py"><code>omni-reference-to-video</code></a> ·
+        <a href="./models/seedance-20/reference-to-video.py"><code>reference-to-video</code></a> ·
+        <a href="./models/seedance-20/video-edit.py"><code>video-edit</code></a> ·
+        <a href="./models/seedance-20/video-extend.py"><code>video-extend</code></a>
       </td>
       <td>ByteDance</td>
     </tr>
