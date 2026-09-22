@@ -103,6 +103,20 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>ByteDance</td>
     </tr>
     <tr>
+      <td><a href="./models/seedance2.0-mini"><b>Seedance 2.0 Mini</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/seedance2.0-mini/text-to-video.py"><code>text-to-video</code></a> ·
+        <a href="./models/seedance2.0-mini/image-to-video.py"><code>image-to-video</code></a> ·
+        <a href="./models/seedance2.0-mini/first-last-frame-to-video.py"><code>first-last-frame-to-video</code></a> ·
+        <a href="./models/seedance2.0-mini/omni-reference-to-video.py"><code>omni-reference-to-video</code></a> ·
+        <a href="./models/seedance2.0-mini/reference-to-video.py"><code>reference-to-video</code></a> ·
+        <a href="./models/seedance2.0-mini/video-edit.py"><code>video-edit</code></a> ·
+        <a href="./models/seedance2.0-mini/video-extend.py"><code>video-extend</code></a>
+      </td>
+      <td>ByteDance</td>
+    </tr>
+    <tr>
       <td><a href="./models/nanobanana2"><b>NanoBanana 2</b></a></td>
       <td>Image</td>
       <td>
