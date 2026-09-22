@@ -254,7 +254,7 @@ models/
     └── <use-case>.sh      curl only · no jq
 ```
 
-Use-case names are shared across models so you always know what to look for: `text-to-image`, `image-to-image`, `text-to-video`, `image-to-video`, `reference-to-video`, `text-to-speech`, `voice-clone`.
+Use-case names are shared across models so you always know what to look for: `text-to-image`, `image-to-image`, `text-to-video`, `image-to-video`, `first-last-frame-to-video`, `omni-reference-to-video`, `reference-to-video`, `video-edit`, `video-extend`, `text-to-speech`, `voice-clone`.
 
 <br>
 

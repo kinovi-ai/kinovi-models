@@ -213,6 +213,7 @@ Poll every couple of seconds until `status` is `success` or `fail`. A short clip
 | `InvalidParameter` | `Audio cannot be the only reference input. Please also provide an image or video reference.` | `audioUrls` given without any image or video. |
 | `InvalidParameter` | `Reference video total duration exceeds the limit. Please use videos with a combined duration of 15 seconds or less.` | `videoUrls` add up to more than 15 s. |
 | `500` | `Failed to download your reference video. Please replace it or try again.` | A `videoUrls` entry returned an error when downloaded. Fails within seconds. |
+| `500` | `Generation failed. Please try again.` | The generation backend returned an error. Credits are refunded; resubmit the same request. |
 
 </details>
 
