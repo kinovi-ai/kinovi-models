@@ -131,6 +131,34 @@ Every script is a single file with no shared imports. Copy it anywhere, edit the
       <td>ByteDance</td>
     </tr>
     <tr>
+      <td><a href="./models/seedance2-5"><b>Seedance 2.5</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/seedance2-5/text-to-video.py"><code>text-to-video</code></a> ·
+        <a href="./models/seedance2-5/image-to-video.py"><code>image-to-video</code></a> ·
+        <a href="./models/seedance2-5/first-last-frame-to-video.py"><code>first-last-frame-to-video</code></a> ·
+        <a href="./models/seedance2-5/omni-reference-to-video.py"><code>omni-reference-to-video</code></a> ·
+        <a href="./models/seedance2-5/reference-to-video.py"><code>reference-to-video</code></a>
+      </td>
+      <td>ByteDance</td>
+    </tr>
+    <tr>
+      <td><a href="./models/seedance2-5-extend"><b>Seedance 2.5 Video Extend</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/seedance2-5-extend/video-extend.py"><code>video-extend</code></a>
+      </td>
+      <td>ByteDance</td>
+    </tr>
+    <tr>
+      <td><a href="./models/seedance2-5-edit"><b>Seedance 2.5 Video Edit</b></a></td>
+      <td>Video</td>
+      <td>
+        <a href="./models/seedance2-5-edit/video-edit.py"><code>video-edit</code></a>
+      </td>
+      <td>ByteDance</td>
+    </tr>
+    <tr>
       <td><a href="./models/nanobanana2"><b>NanoBanana 2</b></a></td>
       <td>Image</td>
       <td>
