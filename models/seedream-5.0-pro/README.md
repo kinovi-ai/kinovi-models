@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  [Playground](https://kinovi.ai/app/gallery?model=seedream-5.0-pro) &nbsp;·&nbsp; [Full docs](https://kinovi.ai/docs/models/seedream-5.0-pro) &nbsp;·&nbsp; [Get an API key](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; [Content policy](https://kinovi.ai/terms)
+  <a href="https://kinovi.ai/app/gallery?model=seedream-5.0-pro">Playground</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/docs/models/seedream-5.0-pro">Full docs</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/app/api-keys">Get an API key</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/terms">Content policy</a>
 </p>
 
 **Contents**

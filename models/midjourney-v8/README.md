@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  [Playground](https://kinovi.ai/app/gallery?model=midjourney-v8) &nbsp;·&nbsp; [Full docs](https://kinovi.ai/docs/models/midjourney-v8) &nbsp;·&nbsp; [Get an API key](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; [Content policy](https://kinovi.ai/terms)
+  <a href="https://kinovi.ai/app/gallery?model=midjourney-v8">Playground</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/docs/models/midjourney-v8">Full docs</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/app/api-keys">Get an API key</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/terms">Content policy</a>
 </p>
 
 **Contents**
