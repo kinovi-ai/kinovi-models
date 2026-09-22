@@ -12,19 +12,20 @@
   <a href="https://kinovi.ai/models/nano-banana-pro"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-<p align="center">
-  <a href="https://kinovi.ai/app/gallery?model=nanobanana-pro">Playground</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/docs/models/nanobanana-pro">Full docs</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/app/api-keys">Get an API key</a> &nbsp;·&nbsp; <a href="https://kinovi.ai/terms">Content policy</a>
-</p>
+| **Try it** | [Playground](https://kinovi.ai/app/gallery?model=nanobanana-pro) |
+|:--|:--|
+| **Full docs** | [kinovi.ai/docs/models/nanobanana-pro](https://kinovi.ai/docs/models/nanobanana-pro) |
+| **API key** | [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) |
+| **Content policy** | [kinovi.ai/terms](https://kinovi.ai/terms) |
 
 **Contents**
 
-- [Run an example](#run-an-example)
-- [Request](#request)
-  - [Full request](#full-request)
-  - [Reference images](#reference-images)
-- [Result](#result)
-  - [Output fields](#output-fields)
-- [Pricing](#pricing) — from $0.0670 / image
+| Section | Inside |
+|:--|:--|
+| [Run an example](#run-an-example) | Python, TypeScript and curl scripts |
+| [Request](#request) | endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images) |
+| [Result](#result) | polling, response shape · [Output fields](#output-fields) |
+| [Pricing](#pricing) | from $0.0670 / image |
 
 <br>
 
