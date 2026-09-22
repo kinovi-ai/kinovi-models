@@ -11,21 +11,8 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.01%20%2F%20image-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/gpt-image-2"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-<p align="center">
-  <a href="https://kinovi.ai/app/gallery?model=gpt-image-2"><b>Playground</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/docs/models/gpt-image-2"><b>Docs</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
-</p>
 
-**Contents**
-
-- [Run an example](#run-an-example)
-- [Request](#request)
-  - [Full request](#full-request)
-  - [Reference images](#reference-images)
-- [Result](#result)
-  - [Output fields](#output-fields)
-- [Pricing](#pricing) — from $0.01 / image
+> Try it in the [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2) · Full reference at [kinovi.ai/docs/models/gpt-image-2](https://kinovi.ai/docs/models/gpt-image-2) · Get an [API key](https://kinovi.ai/app/api-keys)
 
 <br>
 

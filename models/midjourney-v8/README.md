@@ -11,23 +11,8 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.0565%20%2F%204%20images-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/midjourney-v8"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-<p align="center">
-  <a href="https://kinovi.ai/app/gallery?model=midjourney-v8"><b>Playground</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/docs/models/midjourney-v8"><b>Docs</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
-</p>
 
-**Contents**
-
-- [Run an example](#run-an-example)
-- [Request](#request)
-  - [Full request](#full-request)
-  - [Reference images](#reference-images)
-  - [Output sizes](#output-sizes)
-- [Result](#result)
-  - [Output fields](#output-fields)
-  - [Error codes](#error-codes)
-- [Pricing](#pricing) — from $0.0565 / 4 images
+> Try it in the [Playground](https://kinovi.ai/app/gallery?model=midjourney-v8) · Full reference at [kinovi.ai/docs/models/midjourney-v8](https://kinovi.ai/docs/models/midjourney-v8) · Get an [API key](https://kinovi.ai/app/api-keys)
 
 <br>
 

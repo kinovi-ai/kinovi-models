@@ -11,23 +11,8 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.0353%20%2F%20s-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/seedance2-mini"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-<p align="center">
-  <a href="https://kinovi.ai/app/gallery?model=seedance2.0-mini"><b>Playground</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/docs/models"><b>Docs</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
-</p>
 
-**Contents**
-
-- [Run an example](#run-an-example)
-- [Request](#request)
-  - [Full request](#full-request)
-  - [Reference media](#reference-media)
-- [Result](#result)
-  - [Output fields](#output-fields)
-  - [Error codes](#error-codes)
-  - [Output size](#output-size)
-- [Pricing](#pricing) — from $0.0353 / s
+> Try it in the [Playground](https://kinovi.ai/app/gallery?model=seedance2.0-mini) · Full reference at [kinovi.ai/docs/models](https://kinovi.ai/docs/models) · Get an [API key](https://kinovi.ai/app/api-keys)
 
 <br>
 

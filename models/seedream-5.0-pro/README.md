@@ -11,21 +11,8 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.0659%20%2F%20image-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/seedream-5-pro"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-<p align="center">
-  <a href="https://kinovi.ai/app/gallery?model=seedream-5.0-pro"><b>Playground</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/docs/models/seedream-5.0-pro"><b>Docs</b></a> &nbsp;·&nbsp;
-  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
-</p>
 
-**Contents**
-
-- [Run an example](#run-an-example)
-- [Request](#request)
-  - [Full request](#full-request)
-  - [Reference images](#reference-images)
-- [Result](#result)
-  - [Output fields](#output-fields)
-- [Pricing](#pricing) — from $0.0659 / image
+> Try it in the [Playground](https://kinovi.ai/app/gallery?model=seedream-5.0-pro) · Full reference at [kinovi.ai/docs/models/seedream-5.0-pro](https://kinovi.ai/docs/models/seedream-5.0-pro) · Get an [API key](https://kinovi.ai/app/api-keys)
 
 <br>
 
