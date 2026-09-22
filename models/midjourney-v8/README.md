@@ -94,17 +94,38 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
 | `model` | `string` | **required** | Must be `"midjourney-v8"`. |
-| `inputs.prompt` | `string` | **required** | What to generate, or how to restyle the reference image. Capped at 6,000 characters — see [Prompt limit](#prompt-limit). |
-| `inputs.uploadedUrls` | `string[]` | – | At most 1 publicly reachable reference image URL. Omit for pure text-to-image. A URL that cannot be fetched is ignored; the task still runs without the reference. |
+| `inputs.prompt` | `string` | **required** | What to generate, or how to restyle the reference image. Plain text; Midjourney `--flags` may be written inline (see [Prompt rules](#prompt-rules)). Capped at 6,000 characters — see [Prompt limit](#prompt-limit). |
+| `inputs.uploadedUrls` | `string[]` | – | At most 1 publicly reachable reference image URL, used as the image prompt. Omit for pure text-to-image. A URL that cannot be fetched is ignored and the task runs without the reference; an image that fails Midjourney's image filters ends the task in `fail` (see [Error codes](#error-codes)). |
 | `inputs.aspectRatio` | `string` | `1:1` | `1:1` · `3:2` · `2:3` · `4:3` · `3:4` · `4:5` · `5:4` · `16:9` · `9:16` · `21:9`. A value outside this list is not rejected — the task runs at `1:1`. Each value maps to a fixed output size; see below. |
 | `inputs.stylize` | `integer` | – | Optional. 0–1000. Higher is more stylized. |
 | `inputs.chaos` | `integer` | – | Optional. 0–100. Higher is more varied. |
 | `inputs.weird` | `integer` | – | Optional. 0–3000. Adds unconventional aesthetics. |
 | `inputs.quality` | `number` | – | Optional. One of `0.25` · `0.5` · `1`; any other value is rejected with `400`. |
 | `inputs.style` | `string` | – | Optional. `raw` for less opinionated results. Only `raw` is accepted; any other value is rejected with `400`. |
-| `inputs.no` | `string` | – | Optional. Negative prompt. |
+| `inputs.no` | `string` | – | Optional. Negative prompt: comma-separated things to leave out (`"text, watermark"`). Some words are not allowed here even though they are fine in the prompt — see [Prompt rules](#prompt-rules). |
 | `inputs.seed` | `integer` | – | Optional. 0–4294967295. |
+| `inputs.autoFix` | `boolean` | `true` | When Midjourney rejects the prompt for a banned word or a moderation flag, Kinovi edits the wording and resubmits so the task still completes. Set `false` to receive the rejection as a `fail` instead — see [Prompt rules](#prompt-rules). |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
+
+### Prompt rules
+
+Midjourney screens every prompt before rendering. Knowing the rules up front saves a round trip; knowing what Kinovi does on your behalf tells you what to expect back.
+
+**Banned words.** Midjourney keeps a word list that is stricter than most moderation — everyday words like `exposed`, `bleed`, `vein`, `barefoot`, `bikini`, `surgery` or `reproduce` are rejected regardless of context, and Midjourney reports one offending word at a time. Anatomy, violence, gore, nudity and sexualised wording are the largest groups. A separate AI moderator can also reject a prompt without naming a word when the overall theme reads as adult or violent.
+
+**Auto-fix (default).** With `autoFix` on, a rejected prompt is not returned to you as a failure. Kinovi removes the reported word (or, when no word is named, rephrases the prompt to keep the scene and drop the flagged element) and resubmits. This happens inside the task: `status` stays `generating`, no extra credits are charged, and the four images are rendered from the adjusted prompt. When the prompt still cannot pass, the task ends in `fail` with the original rejection so you can act on it. If you need to know the exact wording that was rendered — for example in a tool that lets users copy prompts — set `autoFix: false` and handle `banned_prompt_words` yourself.
+
+**`--no` is stricter than the prompt.** Words that Midjourney accepts in a prompt can still be banned inside `--no`. `clothing` and `clothes` are the common case: `"prompt": "portrait in casual clothing"` is fine, `"no": "clothing"` fails the task. Auto-fix removes such terms from `--no` only; the prompt body is left intact.
+
+**Inline flags.** You can write Midjourney parameters directly in the prompt (`a red bicycle --ar 16:9 --s 250 --style raw --no text`). Rules:
+
+- An inline flag wins over the matching field: with `--ar 16:9` in the prompt, `inputs.aspectRatio` is ignored. An inline ratio outside the supported list is dropped and the field (or `1:1`) applies.
+- Leave `--v` out. The model pins the V8 release it runs; `--v 8` / `--v 8.x` are normalised to it, any other version is passed through as written.
+- A leading `/imagine prompt:` or `/` is stripped, so pasting from Discord works.
+- A lone `--` is read as a comma, but `---` (for example a Markdown divider) reaches Midjourney as an empty parameter and fails the task with `Unrecognized parameter(s)`. Use commas or line breaks to separate ideas.
+- Flags this model does not support fail after the task is created, with the message naming the flag: `--cref` (not compatible with V8), `--sw` / `--cw` without their `--sref` / `--cref`, `--hd`, personalization codes (`--p xxxx`), `--stylize` outside 0–1000. Credits are refunded. If you only need aspect ratio, stylize, chaos, weird, quality, raw style, negative prompt or seed, prefer the structured fields — they are validated with a `400` before any credits move.
+
+**Length.** The prompt plus everything the API appends for the other fields must fit in 6,000 characters. See [Prompt limit](#prompt-limit).
 
 ### Output sizes
 
@@ -141,43 +162,43 @@ you set other options.
 
 `GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…`
 
-Poll every couple of seconds until `status` is `success` or `fail`. Midjourney jobs usually take 1–2 minutes. On success, `output` has four images.
+Poll every 5–10 seconds until `status` is `success` or `fail`. Most tasks finish in 30–60 seconds; allow up to 90 seconds under load, and up to 10 minutes when auto-fix has to resubmit the prompt. Poll for at least 10 minutes before treating a task as stuck. On success, `output` has four images in the order Midjourney rendered them; `width` / `height` follow the [output size](#output-sizes) for the aspect ratio.
 
 ```json
 {
-  "taskId": "task_d5ibgnwdlw8fe3zpptx9mp0f",
+  "taskId": "task_ff01ii3zvib7ndbx8negnh6q",
   "model": "midjourney-v8",
   "status": "success",
   "creditsUsed": 12,
   "output": [
     {
-      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_0.png",
+      "url": "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-0.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_1.png",
+      "url": "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-1.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_2.png",
+      "url": "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-2.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     },
     {
-      "url": "https://static.kinovi.ai/generated-images/2026-09-10/midjourney_v8_3.png",
+      "url": "https://static.kinovi.ai/generated-images/task_ff01ii3zvib7ndbx8negnh6q-3.png",
       "width": 1024,
       "height": 1024,
       "mediaType": "image/png"
     }
   ],
   "error": null,
-  "createTime": 1789005095581,
-  "completeTime": 1789005126039
+  "createTime": 1789262789201,
+  "completeTime": 1789262830476
 }
 ```
 
@@ -187,6 +208,34 @@ Poll every couple of seconds until `status` is `success` or `fail`. Midjourney j
 | `generating` | Running |
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
+
+`creditsUsed` is the amount reserved at submit; `recordInfo` does not carry a refund flag, so a `fail` still shows the original `creditsUsed` even though the credits are back in your balance.
+
+### Error codes
+
+Validation problems (`400`) are caught at `createTask` and never become a task. Everything below is reported on `recordInfo` as `status: "fail"` after the task was accepted, and the credits are refunded. Most are about the prompt or the reference image and are worth surfacing to your users as-is; a few are transient and worth one retry on your side.
+
+<details>
+<summary>Error codes seen in <code>fail</code></summary>
+
+| `error.code` | `error.message` (example) | Cause · what to do |
+|:--|:--|:--|
+| `banned_prompt_words` | `banned prompt words：exposed` | The prompt contains a word on Midjourney's list; the message names it. Only seen with `autoFix: false`, or when auto-fix ran out of ways to rephrase. Remove or replace the word and resubmit. |
+| `500` | `[Banned prompt detected] Content violates community standards.` | Midjourney's AI moderator rejected the prompt as a whole without naming a word. Tone down adult, violent or gory themes. |
+| `500` | `Invalid prompt parameter. Please check your prompt settings and try again.` | A word in `no` (or an inline `--no`) is not allowed there, most often `clothing` / `clothes`. Drop it from the negative prompt. |
+| `500` | `Your uploaded image violates platform rules. Please use a different image.` | The `uploadedUrls` image was rejected by Midjourney's image filters. Rewording the prompt does not help; use a different image. |
+| `500` | `Your content was blocked by moderation. Please adjust your prompt or uploaded media and try again.` | A safety review flagged the request. Adjust the prompt or the reference image. |
+| `500` | `Sorry, while the prompt you entered was deemed safe, the generated image may fall outside our community guidelines.` | The prompt passed but the rendered image did not. Rerun as-is or with a different `seed`; the outcome varies. |
+| `500` | `Prompts must be 6000 or fewer in length.` | Prompt plus appended flags exceeds 6,000 characters — see [Prompt limit](#prompt-limit). |
+| `500` | ``[Invalid parameter] Unrecognized parameter(s): `---` `` | An inline token Midjourney does not know — usually a stray `---` or an unsupported flag. See [Prompt rules](#prompt-rules). |
+| `500` | ``[Invalid parameter] Cannot use `--sw` without a `--sref` `` | Paired inline flags used alone (`--sw` / `--cw`). Add the partner flag or remove both. |
+| `500` | ``[Invalid parameter] `--stylize` must be between 0 and 1000`` | An inline flag value out of range. Use the structured field instead; it is validated before submit. |
+| `500` | `[unknown] Invalid User ID or Personalization code: …` | A `--p` personalization code from another account. Remove it. |
+| `500` | `Service temporarily unavailable. Please try again later.` | Capacity problem on the generation side. Retry after a short delay. |
+| `500` | `You have reached the maximum of job queues. Please try again later.` | Queue congestion. Retry after 30–60 seconds. |
+| `500` | `Execution error, system exception.` | Transient rendering error. Retry once as-is. |
+
+</details>
 
 <br>
 
