@@ -181,17 +181,17 @@ Poll every couple of seconds until `status` is `success` or `fail`. A short clip
   "creditsUsed": 100,
   "output": [
     {
-      "url": "https://static.kinovi.ai/videos/seedance_video_1789011790741_17cd129c.mp4",
+      "url": "https://static.kinovi.ai/videos/seedance_video_1790048159387_a00bbc00.mp4",
       "width": 1280,
       "height": 720,
       "mediaType": "video/mp4",
-      "seed": 83856,
-      "lastFrameImage": "https://static.kinovi.ai/videos/seedance_video_1789011790741_17cd129c_lastframe.png"
+      "seed": 52798,
+      "lastFrameImage": "https://static.kinovi.ai/videos/seedance_video_1790048159387_a00bbc00_lastframe.png"
     }
   ],
   "error": null,
-  "createTime": 1789005095581,
-  "completeTime": 1789005226039
+  "createTime": 1790048061199,
+  "completeTime": 1790048165559
 }
 ```
 

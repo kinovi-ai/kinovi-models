@@ -11,3 +11,6 @@ __pycache__/
 
 # Local dev-verification runs against dev.kinovi.ai (never committed).
 .local-verify/
+
+# Local agent rules (contain internal product notes).
+.cursor/
