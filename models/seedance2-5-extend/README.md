@@ -14,8 +14,6 @@
 
 > Try it in the [Playground](https://kinovi.ai/app/gallery?model=seedance2-5-extend) · Full reference at [kinovi.ai/docs/models](https://kinovi.ai/docs/models) · Get an [API key](https://kinovi.ai/app/api-keys)
 
-This is the extension face of [Seedance 2.5](../seedance2-5/README.md): same fields, same prices, but `videoUrls` and `duration` are required, the aspect ratio always follows the source clip, and the backend knows the task is an extension without any special wording in the prompt. To restyle or edit a clip instead, use [Seedance 2.5 Video Edit](../seedance2-5-edit/README.md).
-
 <br>
 
 ## Run an example
@@ -70,7 +68,7 @@ The script submits a task, polls until it finishes, and saves the `.mp4` next to
 }
 ```
 
-Response `200 OK` — the task is queued and credits are reserved for the new footage. Use `taskId` to poll for the result.
+Response `200 OK` — the task is queued and credits are reserved. Use `taskId` to poll for the result.
 
 ```json
 {
@@ -83,7 +81,7 @@ Response `200 OK` — the task is queued and credits are reserved for the new fo
 
 | HTTP | Body | When |
 |:--|:--|:--|
-| `400` | `{ "message": "Invalid inputs for model", "errors": [ { "code": "custom", "message": "At least one reference video (videoUrls) is required.", "path": ["videoUrls"] } ] }` | `videoUrls` is missing or empty — images alone are not enough. |
+| `400` | `{ "message": "Invalid inputs for model", "errors": [ { "code": "custom", "message": "At least one reference video (videoUrls) is required.", "path": ["videoUrls"] } ] }` | `videoUrls` is missing or empty. |
 | `400` | `{ "message": "Invalid inputs for model", "errors": [ { "code": "custom", "message": "Duration must be between 4 and 30 seconds", "path": ["duration"] } ] }` | `duration` is missing or outside 4–30. |
 | `400` | `{ "message": "Invalid inputs for model", "errors": [ … ] }` | Another field has the wrong type or an unsupported value, for example `outputResolution: "4k"`. `errors` lists each problem with its `path`. Nothing is charged. |
 | `400` | `{ "message": "Unknown model" }` | `model` is not a Kinovi model id. |
@@ -97,21 +95,23 @@ Response `200 OK` — the task is queued and credits are reserved for the new fo
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
 | `model` | `string` | **required** | Must be `"seedance2-5-extend"`. |
-| `inputs.prompt` | `string` | **required** | What happens in the new footage, in any language. Describe only the continuation — the backend already tells the model this is an extension. Max **30,000** characters. |
-| `inputs.videoUrls` | `string[]` | **required** | The clip to continue: a publicly reachable `.mp4` / `.mov` / `.webm` URL, 2–30 s long. Up to **10** videos, **30 s combined**; the first one is the clip that is continued. Longer footage ends the task in `fail` and refunds the credits. |
-| `inputs.duration` | `integer` | **required** | Length of the **new** footage in seconds, an integer from `4` to `30`. This is the length of the output file — the source clip is not included in it. |
-| `inputs.imageUrls` | `string[]` | – | Up to **30** optional reference images (`.jpg` / `.png` / `.webp`) for a subject or style that should appear in the continuation. |
-| `inputs.audioUrls` | `string[]` | – | Up to **10** optional audio references (`.mp3` / `.wav` / `.m4a` / `.aac` / `.ogg` / `.flac`), **30 s combined**. |
-| `inputs.outputResolution` | `string` | `720p` | `480p` · `720p` · `1080p`. Sets the price tier. `"4k"` is a `400`. |
-| `inputs.generate_audio` | `boolean` | `true` | Generate a synced audio track. Set `false` for a silent video. Must be a real boolean. |
-| `inputs.bitrate_mode` | `string` | – | Set to `"high"` to request the higher-bitrate encode. The only accepted value; omit for the standard bitrate. |
-| `inputs.output_format` | `string` | `mp4` | `mp4` · `mov`. With `mov` the result is a QuickTime file (`mediaType: "video/quicktime"`). |
-| `inputs.seed` | `integer` | random | `0`–`4294967295`, or `-1` for random; other values are a `400`. Every run is randomised — the same seed does not reproduce a clip. The seed the model used comes back as `output[0].seed`. |
-| `callBackUrl` | `string` | – | Optional webhook called when the task finishes. Must be a valid URL or the request is a `400`. |
+| `inputs.prompt` | `string` | **required** | What happens in the new footage, in any language. Describe only the continuation. Max **30,000** characters. |
+| `inputs.videoUrls` | `string[]` | **required** | The clip to continue (`.mp4` / `.mov` / `.webm`, 2–30 s). The first video is the one that is continued; up to **10** videos, **30 s combined**. |
+| `inputs.duration` | `integer` | **required** | Length of the new footage in seconds, an integer from `4` to `30`. |
+| `inputs.imageUrls` | `string[]` | – | Up to **30** reference images (`.jpg` / `.png` / `.webp`) for a subject or style to bring into the continuation. |
+| `inputs.audioUrls` | `string[]` | – | Up to **10** audio references (`.mp3` / `.wav` / `.m4a` / `.aac` / `.ogg` / `.flac`), **30 s combined**. |
+| `inputs.outputResolution` | `string` | `720p` | `480p` · `720p` · `1080p`. |
+| `inputs.generate_audio` | `boolean` | `true` | Generate a synced audio track. Set `false` for a silent video. |
+| `inputs.bitrate_mode` | `string` | – | Set to `"high"` for a higher-bitrate encode; omit for the standard bitrate. |
+| `inputs.output_format` | `string` | `mp4` | `mp4` · `mov`. |
+| `inputs.seed` | `integer` | random | `0`–`4294967295`, or `-1` for random. The same seed does not reproduce a clip; the seed actually used comes back as `output[0].seed`. |
+| `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
-`inputs.mode` and `inputs.aspectRatio` are accepted for compatibility with `seedance2-5` but have no effect here: the task always runs in `reference` mode and the output keeps the source clip's aspect ratio. Unknown `inputs` keys are ignored silently.
+The output always keeps the source clip's aspect ratio.
 
 ### Full request
+
+`model`, `inputs.prompt`, `inputs.videoUrls` and `inputs.duration` are required; the other fields are shown at their defaults or typical values.
 
 <details>
 <summary>All fields</summary>
@@ -139,7 +139,9 @@ Response `200 OK` — the task is queued and credits are reserved for the new fo
 
 </details>
 
-Files must be publicly reachable **by the generation backend** at request time, not just from your machine. To use local files, upload them first via `POST /api/v1/uploads` and pass the returned URLs; uploaded files are kept for 24 hours. A reference the backend cannot fetch, or that fails media review, fails the task with `error.code = "asset_review_failed"` and a message naming the media; the credits are refunded. A video that cannot be downloaded fails within seconds with `"Failed to download your reference video…"`.
+### Reference media
+
+One source video is required; images and audio are optional extras. Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. A file that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
 
 <br>
 
@@ -147,11 +149,7 @@ Files must be publicly reachable **by the generation backend** at request time, 
 
 `GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…`
 
-Poll every couple of seconds until `status` is `success` or `fail`. Expect 4–6 minutes for a 4–10 second extension at `480p` or `720p`; longer extensions and `1080p` take longer. Poll for at least 15 minutes before treating a task as stuck.
-
-`output[0].url` is an `.mp4` (24 fps, AAC audio; H.264 at `480p` / `720p`, HEVC at `1080p`) containing **only the new footage**: it is `duration` seconds long, its first frame is the source's last frame, and it keeps the source's aspect ratio at the requested `outputResolution`. Concatenate it after the source yourself if you want one file. It is a `.mov` with PCM audio when `output_format` is `mov`, and has no audio stream when `generate_audio` is `false`. `seed` is the seed actually used and `lastFrameImage` a JPEG of the final frame (a temporary signed link valid for 24 hours and up to 100 downloads — copy it if you need it later; use it as `imageUrls[0]` of a `seedance2-5` keyframe task to keep going).
-
-`creditsUsed` shows the reservation while the task runs and the settled amount once it succeeds (see [Pricing](#pricing)); settlement lands a few seconds after `status` turns `success`, so read it again if you poll right at completion. `recordInfo` does not carry a refund flag, so a `fail` still shows the reserved `creditsUsed` even though the credits are back in your balance.
+Poll every few seconds until `status` is `success` or `fail`. A 4–10 second extension usually takes 4–6 minutes at `480p` / `720p`; longer extensions and `1080p` take longer. Poll for at least 15 minutes before treating a task as stuck.
 
 ```json
 {
@@ -175,8 +173,6 @@ Poll every couple of seconds until `status` is `success` or `fail`. Expect 4–6
 }
 ```
 
-This task continued a 6 s clip by 5 s at `720p`: 175 credits were reserved and 11 s × 35 cr = 385 credits settled.
-
 | `status` | Meaning |
 |:--|:--|
 | `waiting` | Queued, not started yet |
@@ -184,18 +180,34 @@ This task continued a 6 s clip by 5 s at `720p`: 175 credits were reserved and 1
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
 
+### Output fields
+
+`output` has exactly one item.
+
+| Field | Type | Description |
+|:--|:--|:--|
+| `output[0].url` | `string` | The **new footage only**: `duration` seconds, starting on the source's last frame. Append it to the source yourself if you want one file. `.mp4`, or `.mov` when `output_format` is `mov`. |
+| `output[0].width` | `integer` | Pixel width — the source's aspect ratio at `outputResolution`. |
+| `output[0].height` | `integer` | Pixel height. |
+| `output[0].mediaType` | `string` | `video/mp4`, or `video/quicktime` for `mov`. |
+| `output[0].seed` | `integer` | The seed actually used. |
+| `output[0].lastFrameImage` | `string` | JPEG of the final frame. Temporary link, valid for 24 hours; save a copy if you need it later. |
+
+`creditsUsed` is updated to the final amount shortly after `status` turns `success` (see [Pricing](#pricing)). It is not refund-adjusted: a `fail` still shows the reserved amount, although the credits are back in your balance.
+
+### Error codes
+
 <details>
 <summary>Error codes seen in <code>fail</code></summary>
 
-| `error.code` | `error.message` (example) | Cause |
+| `error.code` | `error.message` (example) | Cause · what to do |
 |:--|:--|:--|
-| `asset_review_failed` | `Reference video 1 failed review. Please replace it.` | The video was rejected by media review **or could not be fetched by the backend**. Re-host the file (for example via `/api/v1/uploads`) and retry. |
-| `1001` | `Failed to download your reference video. Please replace it or try again.` | The `videoUrls` entry returned an error when downloaded. Fails within seconds. |
-| `1001` | `Your uploaded video may contain sensitive content. Please use a different video.` | The source video was rejected by content moderation. |
-| `1001` | `The generated video did not pass review. Please modify your prompt or inputs and try again.` | The rendered clip (or its audio: `The generated audio …`) failed moderation. |
-| `1001` | `The generated video may violate platform or copyright rules. Please modify your prompt or inputs and try again.` | Moderation flagged the output for a policy or copyright reason. |
-| `1001` | `Request parameters are invalid for video extension. Use adaptive aspect ratio.` | The backend could not run the clip as an extension. Retry; if it persists, shorten the source or the prompt. |
-| `1001` | `Service temporarily unavailable. Please try again later.` | Capacity problem on the generation side. Retry after a short delay. |
+| `asset_review_failed` | `Reference video 1 failed review. Please replace it.` | The video could not be fetched or was rejected by media review. Re-host the file (see [uploads](https://kinovi.ai/docs/uploads)) or replace it. |
+| `1001` | `Failed to download your reference video. Please replace it or try again.` | The `videoUrls` entry could not be downloaded. Check the URL. |
+| `1001` | `Your uploaded video may contain sensitive content. Please use a different video.` | The source was rejected by content moderation. Use a different video. |
+| `1001` | `The generated video did not pass review. Please modify your prompt or inputs and try again.` | The result failed moderation. Change the prompt. |
+| `1001` | `The generated video may violate platform or copyright rules. Please modify your prompt or inputs and try again.` | The result was flagged for a policy or copyright reason. Change the prompt or source. |
+| `1001` | `Service temporarily unavailable. Please try again later.` | Temporary capacity problem. Retry after a short delay. |
 
 </details>
 
@@ -203,15 +215,15 @@ This task continued a 6 s clip by 5 s at `720p`: 175 credits were reserved and 1
 
 ## Pricing
 
-Priced **per second at the reference-video rate** of the chosen `outputResolution` — the same rates as a `seedance2-5` task with a reference video. Reference images and audio do not change the price. Live prices: [kinovi.ai/models/seedance2-5-extend](https://kinovi.ai/models/seedance2-5-extend).
+Priced **per second** by `outputResolution`, counting the source footage plus the new footage. Live prices: [kinovi.ai/models/seedance2-5-extend](https://kinovi.ai/models/seedance2-5-extend).
 
 | | 480p | 720p | 1080p |
 |:--|--:|--:|--:|
 | **per second** | $0.0737 · 16 cr | $0.1612 · 35 cr | $0.3947 · 85.68 cr |
 
-At submit, `duration` × the rate is reserved. When the task succeeds the bill is settled to `(source video seconds, capped at 30) + duration`, rounded to the whole second, at the same rate — so the final charge is higher than the reservation. A 6 s source with `duration: 4` at `480p` reserves 64 credits and settles at 10 × 16 = 160 credits; a 20 s source with `duration: 4` settles at 24 × 16 = 384 credits. Every video in `videoUrls` counts towards the source seconds. Failed tasks are refunded in full.
+`duration` × the rate is reserved at submit. On success the charge becomes `(source video seconds, up to 30) + duration` at the same rate — the response above extended a 6 s clip by 5 s, so 11 s × 35 cr = 385 credits. Failed tasks are refunded in full.
 
-Example: the video-extend script continues a 10 s clip with 5 s of new footage at `720p` — **175 credits ($0.81)** are reserved at submit and the task settles at 15 s × 35 cr = **525 credits · $2.42**.
+Example: the video-extend script adds 5 s to a 10 s clip at `720p` — **525 credits · $2.42** (15 s × 35 cr).
 
 <br>
 

@@ -42,7 +42,7 @@ const INPUTS = {
     "change the nail polish to glossy black with fine gold flakes and change the grey ribbed " +
     "sweater to a deep burgundy one. Everything else stays identical.",
   // The clip to edit goes in videoUrls (4-30 s). Describe what to change and what to keep;
-  // the output follows the source frame by frame and has the source's length — no duration needed.
+  // the output follows the source's motion and has its length — no duration needed.
   videoUrls: ["https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4"],
   outputResolution: "720p", // 480p | 720p | 1080p
   // The output keeps the source clip's aspect ratio (9:16 here); aspectRatio is not applied.

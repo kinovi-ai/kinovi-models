@@ -41,8 +41,8 @@ const INPUTS = {
     "The hand with the colorful nails slowly turns palm-up, the fingers spread, then the " +
     "hand reaches down and picks up a small gold ring from the table. Same lighting, " +
     "same grey sweater, same wall.",
-  // The clip to continue goes in videoUrls (2-30 s). Describe only the new action; the model knows
-  // this is an extension. The output is the NEW footage only, starting on the source's last frame.
+  // The clip to continue goes in videoUrls (2-30 s). Describe only the new action.
+  // The output is the NEW footage only, starting on the source's last frame.
   videoUrls: ["https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4"],
   duration: 5, // length of the new footage; 4-30 seconds, required
   outputResolution: "720p", // 480p | 720p | 1080p

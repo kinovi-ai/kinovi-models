@@ -46,7 +46,7 @@ INPUTS = {
         "sweater to a deep burgundy one. Everything else stays identical."
     ),
     # The clip to edit goes in videoUrls (4-30 s). Describe what to change and what to keep;
-    # the output follows the source frame by frame and has the source's length — no duration needed.
+    # the output follows the source's motion and has its length — no duration needed.
     "videoUrls": [
         "https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4",
     ],

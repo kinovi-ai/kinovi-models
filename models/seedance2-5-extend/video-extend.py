@@ -45,8 +45,8 @@ INPUTS = {
         "hand reaches down and picks up a small gold ring from the table. Same lighting, "
         "same grey sweater, same wall."
     ),
-    # The clip to continue goes in videoUrls (2-30 s). Describe only the new action; the model knows
-    # this is an extension. The output is the NEW footage only, starting on the source's last frame.
+    # The clip to continue goes in videoUrls (2-30 s). Describe only the new action.
+    # The output is the NEW footage only, starting on the source's last frame.
     "videoUrls": [
         "https://static.kinovi.ai/videos/seedance_video_1775631198994_17cd129c.mp4",
     ],

@@ -1,7 +1,7 @@
 <h1 align="center">Seedance 2.5 Video Edit</h1>
 
 <p align="center">
-  Edit an existing clip with Seedance 2.5 on the Kinovi API. Pass the video and describe what to change — subject, colours, clothing, background, lighting or style — and the output follows the source frame by frame, at the source's length and aspect ratio.<br>
+  Edit an existing clip with Seedance 2.5 on the Kinovi API. Pass the video and describe what to change — subject, colours, clothing, background, lighting or style — and the output follows the source's motion, at the source's length and aspect ratio.<br>
   Source clips of 4–30 seconds, 480p to 1080p.
 </p>
 
@@ -13,8 +13,6 @@
 </p>
 
 > Try it in the [Playground](https://kinovi.ai/app/gallery?model=seedance2-5-edit) · Full reference at [kinovi.ai/docs/models](https://kinovi.ai/docs/models) · Get an [API key](https://kinovi.ai/app/api-keys)
-
-This is the editing face of [Seedance 2.5](../seedance2-5/README.md): same fields, same prices, but `videoUrls` is required, there is no `duration` to choose (the output is as long as the source), the aspect ratio always follows the source clip, and the backend knows the task is an edit without any special wording in the prompt. To continue a clip instead, use [Seedance 2.5 Video Extend](../seedance2-5-extend/README.md).
 
 <br>
 
@@ -82,8 +80,8 @@ Response `200 OK` — the task is queued and an estimate is reserved. Use `taskI
 
 | HTTP | Body | When |
 |:--|:--|:--|
-| `400` | `{ "message": "Invalid inputs for model", "errors": [ { "code": "custom", "message": "At least one reference video (videoUrls) is required.", "path": ["videoUrls"] } ] }` | `videoUrls` is missing or empty — images alone are not enough. |
-| `400` | `{ "message": "Invalid inputs for model", "errors": [ … ] }` | Another field has the wrong type or an unsupported value, for example `outputResolution: "4k"` or a `duration` outside 4–30. `errors` lists each problem with its `path`. Nothing is charged. |
+| `400` | `{ "message": "Invalid inputs for model", "errors": [ { "code": "custom", "message": "At least one reference video (videoUrls) is required.", "path": ["videoUrls"] } ] }` | `videoUrls` is missing or empty. |
+| `400` | `{ "message": "Invalid inputs for model", "errors": [ … ] }` | Another field has the wrong type or an unsupported value, for example `outputResolution: "4k"`. `errors` lists each problem with its `path`. Nothing is charged. |
 | `400` | `{ "message": "Unknown model" }` | `model` is not a Kinovi model id. |
 | `400` | `{ "message": "Invalid request parameters" }` | The request body itself is malformed, for example `callBackUrl` is not a URL. |
 | `401` | `{ "message": "Invalid API Key" }` | Missing or wrong `Authorization` header. |
@@ -95,21 +93,22 @@ Response `200 OK` — the task is queued and an estimate is reserved. Use `taskI
 | Field | Type | Default | Description |
 |:--|:--|:--|:--|
 | `model` | `string` | **required** | Must be `"seedance2-5-edit"`. |
-| `inputs.prompt` | `string` | **required** | What to change and what to keep, in any language. The backend already tells the model this is an edit, so describe the result ("change the nail polish to emerald green, keep every movement"). Max **30,000** characters. |
-| `inputs.videoUrls` | `string[]` | **required** | The clip to edit: a publicly reachable `.mp4` / `.mov` / `.webm` URL, **4–30 s** long. Up to **10** videos, **30 s combined**; the first one is the clip that is edited. Longer footage ends the task in `fail` and refunds the credits. |
-| `inputs.imageUrls` | `string[]` | – | Up to **30** optional reference images (`.jpg` / `.png` / `.webp`) showing the new subject, outfit or style. |
-| `inputs.audioUrls` | `string[]` | – | Up to **10** optional audio references (`.mp3` / `.wav` / `.m4a` / `.aac` / `.ogg` / `.flac`), **30 s combined**. |
-| `inputs.outputResolution` | `string` | `720p` | `480p` · `720p` · `1080p`. Sets the price tier. `"4k"` is a `400`. |
-| `inputs.duration` | `integer` | – | Not needed: the output is as long as the source. If you send one (`4`–`30`, otherwise a `400`) it only changes the amount reserved at submit — see [Pricing](#pricing). |
-| `inputs.generate_audio` | `boolean` | `true` | Generate a synced audio track. Set `false` for a silent video. Must be a real boolean. |
-| `inputs.bitrate_mode` | `string` | – | Set to `"high"` to request the higher-bitrate encode. The only accepted value; omit for the standard bitrate. |
-| `inputs.output_format` | `string` | `mp4` | `mp4` · `mov`. With `mov` the result is a QuickTime file (`mediaType: "video/quicktime"`). |
-| `inputs.seed` | `integer` | random | `0`–`4294967295`, or `-1` for random; other values are a `400`. Every run is randomised — the same seed does not reproduce a clip. The seed the model used comes back as `output[0].seed`. |
-| `callBackUrl` | `string` | – | Optional webhook called when the task finishes. Must be a valid URL or the request is a `400`. |
+| `inputs.prompt` | `string` | **required** | What to change and what to keep, in any language — for example "change the nail polish to emerald green, keep every movement". Max **30,000** characters. |
+| `inputs.videoUrls` | `string[]` | **required** | The clip to edit (`.mp4` / `.mov` / `.webm`, **4–30 s**). The first video is the one that is edited; up to **10** videos, **30 s combined**. |
+| `inputs.imageUrls` | `string[]` | – | Up to **30** reference images (`.jpg` / `.png` / `.webp`) showing the new subject, outfit or style. |
+| `inputs.audioUrls` | `string[]` | – | Up to **10** audio references (`.mp3` / `.wav` / `.m4a` / `.aac` / `.ogg` / `.flac`), **30 s combined**. |
+| `inputs.outputResolution` | `string` | `720p` | `480p` · `720p` · `1080p`. |
+| `inputs.generate_audio` | `boolean` | `true` | Generate a synced audio track. Set `false` for a silent video. |
+| `inputs.bitrate_mode` | `string` | – | Set to `"high"` for a higher-bitrate encode; omit for the standard bitrate. |
+| `inputs.output_format` | `string` | `mp4` | `mp4` · `mov`. |
+| `inputs.seed` | `integer` | random | `0`–`4294967295`, or `-1` for random. The same seed does not reproduce a clip; the seed actually used comes back as `output[0].seed`. |
+| `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
-`inputs.mode` and `inputs.aspectRatio` are accepted for compatibility with `seedance2-5` but have no effect here: the task always runs in `reference` mode and the output keeps the source clip's aspect ratio. Unknown `inputs` keys are ignored silently.
+There is no `duration` to set: the output has the source's length and aspect ratio.
 
 ### Full request
+
+`model`, `inputs.prompt` and `inputs.videoUrls` are required; the other fields are shown at their defaults or typical values.
 
 <details>
 <summary>All fields</summary>
@@ -136,7 +135,9 @@ Response `200 OK` — the task is queued and an estimate is reserved. Use `taskI
 
 </details>
 
-Files must be publicly reachable **by the generation backend** at request time, not just from your machine. To use local files, upload them first via `POST /api/v1/uploads` and pass the returned URLs; uploaded files are kept for 24 hours. A reference the backend cannot fetch, or that fails media review, fails the task with `error.code = "asset_review_failed"` and a message naming the media; the credits are refunded. A video that cannot be downloaded fails within seconds with `"Failed to download your reference video…"`.
+### Reference media
+
+One source video is required; images and audio are optional extras. Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. A file that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
 
 <br>
 
@@ -144,11 +145,7 @@ Files must be publicly reachable **by the generation backend** at request time, 
 
 `GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…`
 
-Poll every couple of seconds until `status` is `success` or `fail`. Expect 4–6 minutes for a 6–20 second source at `480p` or `720p`; `1080p` takes longer. Poll for at least 15 minutes before treating a task as stuck.
-
-`output[0].url` is an `.mp4` (24 fps, AAC audio; H.264 at `480p` / `720p`, HEVC at `1080p`) with the edited clip — the source's aspect ratio and length (within half a second), at the requested `outputResolution`; a `.mov` with PCM audio when `output_format` is `mov`, and without an audio stream when `generate_audio` is `false`. `seed` is the seed actually used and `lastFrameImage` a JPEG of the final frame (a temporary signed link valid for 24 hours and up to 100 downloads — copy it if you need it later).
-
-`creditsUsed` shows the reservation while the task runs and the settled amount once it succeeds (see [Pricing](#pricing)); settlement lands a few seconds after `status` turns `success`, so read it again if you poll right at completion. `recordInfo` does not carry a refund flag, so a `fail` still shows the reserved `creditsUsed` even though the credits are back in your balance.
+Poll every few seconds until `status` is `success` or `fail`. A 6–20 second source usually takes 4–6 minutes at `480p` / `720p`; `1080p` takes longer. Poll for at least 15 minutes before treating a task as stuck.
 
 ```json
 {
@@ -172,8 +169,6 @@ Poll every couple of seconds until `status` is `success` or `fail`. Expect 4–6
 }
 ```
 
-This task edited a 6 s clip at `720p`: 525 credits (15 s) were reserved and 12 s × 35 cr = 420 credits settled, the difference refunded.
-
 | `status` | Meaning |
 |:--|:--|
 | `waiting` | Queued, not started yet |
@@ -181,18 +176,35 @@ This task edited a 6 s clip at `720p`: 525 credits (15 s) were reserved and 12 s
 | `success` | Done — read `output[].url` |
 | `fail` | Failed — see `error.code` / `error.message`; credits are refunded |
 
+### Output fields
+
+`output` has exactly one item.
+
+| Field | Type | Description |
+|:--|:--|:--|
+| `output[0].url` | `string` | The edited clip, with the source's length and aspect ratio. `.mp4`, or `.mov` when `output_format` is `mov`. |
+| `output[0].width` | `integer` | Pixel width — the source's aspect ratio at `outputResolution`. |
+| `output[0].height` | `integer` | Pixel height. |
+| `output[0].mediaType` | `string` | `video/mp4`, or `video/quicktime` for `mov`. |
+| `output[0].seed` | `integer` | The seed actually used. |
+| `output[0].lastFrameImage` | `string` | JPEG of the final frame. Temporary link, valid for 24 hours; save a copy if you need it later. |
+
+`creditsUsed` is updated to the final amount shortly after `status` turns `success` (see [Pricing](#pricing)). It is not refund-adjusted: a `fail` still shows the reserved amount, although the credits are back in your balance.
+
+### Error codes
+
 <details>
 <summary>Error codes seen in <code>fail</code></summary>
 
-| `error.code` | `error.message` (example) | Cause |
+| `error.code` | `error.message` (example) | Cause · what to do |
 |:--|:--|:--|
-| `asset_review_failed` | `Reference video 1 failed review. Please replace it.` | The video was rejected by media review **or could not be fetched by the backend**. Re-host the file (for example via `/api/v1/uploads`) and retry. |
-| `1001` | `Failed to download your reference video. Please replace it or try again.` | The `videoUrls` entry returned an error when downloaded. Fails within seconds. |
-| `1001` | `Your uploaded video may contain sensitive content. Please use a different video.` | The source video was rejected by content moderation. |
-| `1001` | `The generated video did not pass review. Please modify your prompt or inputs and try again.` | The rendered clip (or its audio: `The generated audio …`) failed moderation. |
-| `1001` | `The generated video may violate platform or copyright rules. Please modify your prompt or inputs and try again.` | Moderation flagged the output for a policy or copyright reason. |
-| `1001` | `Request parameters are invalid for video editing. Use adaptive aspect ratio and automatic duration, and ensure the reference video is 4–30 seconds.` | The source clip is outside the 4–30 s window the editor accepts. |
-| `1001` | `Service temporarily unavailable. Please try again later.` | Capacity problem on the generation side. Retry after a short delay. |
+| `asset_review_failed` | `Reference video 1 failed review. Please replace it.` | The video could not be fetched or was rejected by media review. Re-host the file (see [uploads](https://kinovi.ai/docs/uploads)) or replace it. |
+| `1001` | `Failed to download your reference video. Please replace it or try again.` | The `videoUrls` entry could not be downloaded. Check the URL. |
+| `1001` | `Request parameters are invalid for video editing. Use adaptive aspect ratio and automatic duration, and ensure the reference video is 4–30 seconds.` | The source clip is shorter than 4 s or longer than 30 s. Trim it into range. |
+| `1001` | `Your uploaded video may contain sensitive content. Please use a different video.` | The source was rejected by content moderation. Use a different video. |
+| `1001` | `The generated video did not pass review. Please modify your prompt or inputs and try again.` | The result failed moderation. Change the prompt. |
+| `1001` | `The generated video may violate platform or copyright rules. Please modify your prompt or inputs and try again.` | The result was flagged for a policy or copyright reason. Change the prompt or source. |
+| `1001` | `Service temporarily unavailable. Please try again later.` | Temporary capacity problem. Retry after a short delay. |
 
 </details>
 
@@ -200,15 +212,15 @@ This task edited a 6 s clip at `720p`: 525 credits (15 s) were reserved and 12 s
 
 ## Pricing
 
-Priced **per second at the reference-video rate** of the chosen `outputResolution` — the same rates as a `seedance2-5` task with a reference video. Reference images and audio do not change the price. Live prices: [kinovi.ai/models/seedance2-5-edit](https://kinovi.ai/models/seedance2-5-edit).
+Priced **per second** by `outputResolution`, counting the source footage twice — once as input, once as output. Live prices: [kinovi.ai/models/seedance2-5-edit](https://kinovi.ai/models/seedance2-5-edit).
 
 | | 480p | 720p | 1080p |
 |:--|--:|--:|--:|
 | **per second** | $0.0737 · 16 cr | $0.1612 · 35 cr | $0.3947 · 85.68 cr |
 
-At submit, an estimate is reserved: 15 s × the rate, or `duration` × the rate if you sent a `duration`. When the task succeeds the bill is settled to `2 × source video seconds` (source capped at 30 s — one length for the input, one for the output), rounded to the whole second, at the same rate; the difference is charged or refunded. A 7.4 s source at `720p` settles at 15 s × 35 = 525 credits, a 4 s source at `480p` at 8 s × 16 = 128 credits. Failed tasks are refunded in full.
+An estimate of 15 s × the rate is reserved at submit. On success the charge becomes `2 × source video seconds` (source up to 30 s) at the same rate, and the difference is charged or refunded — the response above edited a 6 s clip, so 12 s × 35 cr = 420 credits. Failed tasks are refunded in full.
 
-Example: the video-edit script edits a 10 s clip at `720p` — **525 credits ($2.42)** are reserved at submit and the task settles at 20 s × 35 cr = **700 credits · $3.22**.
+Example: the video-edit script edits a 10 s clip at `720p` — **700 credits · $3.22** (20 s × 35 cr).
 
 <br>
 
