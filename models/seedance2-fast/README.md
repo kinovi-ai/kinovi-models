@@ -12,14 +12,21 @@
   <a href="https://kinovi.ai/models/seedance2-fast"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models](https://kinovi.ai/docs/models) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=seedance2-fast) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
+<p align="center">
+  [Playground](https://kinovi.ai/app/gallery?model=seedance2-fast) &nbsp;·&nbsp; [Full docs](https://kinovi.ai/docs/models) &nbsp;·&nbsp; [Get an API key](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; [Content policy](https://kinovi.ai/terms)
+</p>
 
 **Contents**
 
-- [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference media](#reference-media)
-- [Result](#result) — polling, response shape · [Output fields](#output-fields) · [Error codes](#error-codes) · [Output size](#output-size)
-- [Pricing](#pricing) — $0.0659 / s
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference media](#reference-media)
+- [Result](#result)
+  - [Output fields](#output-fields)
+  - [Error codes](#error-codes)
+  - [Output size](#output-size)
+- [Pricing](#pricing) — from $0.0659 / s
 
 <br>
 

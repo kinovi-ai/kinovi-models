@@ -12,14 +12,19 @@
   <a href="https://kinovi.ai/models/gpt-image-2"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models/gpt-image-2](https://kinovi.ai/docs/models/gpt-image-2) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
+<p align="center">
+  [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2) &nbsp;·&nbsp; [Full docs](https://kinovi.ai/docs/models/gpt-image-2) &nbsp;·&nbsp; [Get an API key](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; [Content policy](https://kinovi.ai/terms)
+</p>
 
 **Contents**
 
-- [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images)
-- [Result](#result) — polling, response shape · [Output fields](#output-fields)
-- [Pricing](#pricing) — $0.01 / image
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference images](#reference-images)
+- [Result](#result)
+  - [Output fields](#output-fields)
+- [Pricing](#pricing) — from $0.01 / image
 
 <br>
 

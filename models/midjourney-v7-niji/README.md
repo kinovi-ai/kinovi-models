@@ -12,14 +12,21 @@
   <a href="https://kinovi.ai/models/midjourney-v7-niji"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-**Full docs** [kinovi.ai/docs/models/midjourney-v7-niji](https://kinovi.ai/docs/models/midjourney-v7-niji) &nbsp;·&nbsp; **Try it** [Playground](https://kinovi.ai/app/gallery?model=midjourney-v7-niji) &nbsp;·&nbsp; **API key** [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; **Content policy** [kinovi.ai/terms](https://kinovi.ai/terms)
+<p align="center">
+  [Playground](https://kinovi.ai/app/gallery?model=midjourney-v7-niji) &nbsp;·&nbsp; [Full docs](https://kinovi.ai/docs/models/midjourney-v7-niji) &nbsp;·&nbsp; [Get an API key](https://kinovi.ai/app/api-keys) &nbsp;·&nbsp; [Content policy](https://kinovi.ai/terms)
+</p>
 
 **Contents**
 
-- [Run an example](#run-an-example) — Python, TypeScript and curl scripts
-- [Request](#request) — endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images) · [Output sizes](#output-sizes)
-- [Result](#result) — polling, response shape · [Output fields](#output-fields) · [Error codes](#error-codes)
-- [Pricing](#pricing) — $0.0565 / 4 images
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference images](#reference-images)
+  - [Output sizes](#output-sizes)
+- [Result](#result)
+  - [Output fields](#output-fields)
+  - [Error codes](#error-codes)
+- [Pricing](#pricing) — from $0.0565 / 4 images
 
 <br>
 
