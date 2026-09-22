@@ -11,21 +11,23 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.0659%20%2F%20s-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/seedance2-fast"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-
-| **Try it** | [Playground](https://kinovi.ai/app/gallery?model=seedance2-fast) |
-|:--|:--|
-| **Full docs** | [kinovi.ai/docs/models](https://kinovi.ai/docs/models) |
-| **API key** | [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) |
-| **Content policy** | [kinovi.ai/terms](https://kinovi.ai/terms) |
+<p align="center">
+  <a href="https://kinovi.ai/app/gallery?model=seedance2-fast"><b>Playground</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/docs/models"><b>Docs</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
+</p>
 
 **Contents**
 
-| Section | Inside |
-|:--|:--|
-| [Run an example](#run-an-example) | Python, TypeScript and curl scripts |
-| [Request](#request) | endpoint, fields, validation errors · [Full request](#full-request) · [Reference media](#reference-media) |
-| [Result](#result) | polling, response shape · [Output fields](#output-fields) · [Error codes](#error-codes) · [Output size](#output-size) |
-| [Pricing](#pricing) | from $0.0659 / s |
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference media](#reference-media)
+- [Result](#result)
+  - [Output fields](#output-fields)
+  - [Error codes](#error-codes)
+  - [Output size](#output-size)
+- [Pricing](#pricing) — from $0.0659 / s
 
 <br>
 

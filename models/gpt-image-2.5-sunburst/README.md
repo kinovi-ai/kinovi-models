@@ -11,21 +11,21 @@
   <img alt="From" src="https://img.shields.io/badge/from-%7E%241.75%20%2F%20image%20(estimate)-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/gpt-image-2.5-sunburst"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-
-| **Try it** | [Playground](https://kinovi.ai/app/gallery?model=gpt-image-2.5-sunburst) |
-|:--|:--|
-| **Full docs** | [kinovi.ai/docs/models/gpt-image-2.5-sunburst](https://kinovi.ai/docs/models/gpt-image-2.5-sunburst) |
-| **API key** | [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) |
-| **Content policy** | [kinovi.ai/terms](https://kinovi.ai/terms) |
+<p align="center">
+  <a href="https://kinovi.ai/app/gallery?model=gpt-image-2.5-sunburst"><b>Playground</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/docs/models/gpt-image-2.5-sunburst"><b>Docs</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
+</p>
 
 **Contents**
 
-| Section | Inside |
-|:--|:--|
-| [Run an example](#run-an-example) | Python, TypeScript and curl scripts |
-| [Request](#request) | endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images) |
-| [Result](#result) | polling, response shape · [Output fields](#output-fields) |
-| [Pricing](#pricing) | from ~$1.75 / image (estimate) |
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference images](#reference-images)
+- [Result](#result)
+  - [Output fields](#output-fields)
+- [Pricing](#pricing) — from ~$1.75 / image (estimate)
 
 <br>
 

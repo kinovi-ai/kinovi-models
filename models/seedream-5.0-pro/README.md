@@ -11,21 +11,21 @@
   <img alt="From" src="https://img.shields.io/badge/from-%240.0659%20%2F%20image-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/seedream-5-pro"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
-
-| **Try it** | [Playground](https://kinovi.ai/app/gallery?model=seedream-5.0-pro) |
-|:--|:--|
-| **Full docs** | [kinovi.ai/docs/models/seedream-5.0-pro](https://kinovi.ai/docs/models/seedream-5.0-pro) |
-| **API key** | [kinovi.ai/app/api-keys](https://kinovi.ai/app/api-keys) |
-| **Content policy** | [kinovi.ai/terms](https://kinovi.ai/terms) |
+<p align="center">
+  <a href="https://kinovi.ai/app/gallery?model=seedream-5.0-pro"><b>Playground</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/docs/models/seedream-5.0-pro"><b>Docs</b></a> &nbsp;·&nbsp;
+  <a href="https://kinovi.ai/app/api-keys"><b>Get an API key</b></a>
+</p>
 
 **Contents**
 
-| Section | Inside |
-|:--|:--|
-| [Run an example](#run-an-example) | Python, TypeScript and curl scripts |
-| [Request](#request) | endpoint, fields, validation errors · [Full request](#full-request) · [Reference images](#reference-images) |
-| [Result](#result) | polling, response shape · [Output fields](#output-fields) |
-| [Pricing](#pricing) | from $0.0659 / image |
+- [Run an example](#run-an-example)
+- [Request](#request)
+  - [Full request](#full-request)
+  - [Reference images](#reference-images)
+- [Result](#result)
+  - [Output fields](#output-fields)
+- [Pricing](#pricing) — from $0.0659 / image
 
 <br>
 
