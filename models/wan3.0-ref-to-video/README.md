@@ -242,9 +242,7 @@ Priced **per second of video**, by `outputResolution`. Reference images, videos 
 |:--|--:|--:|--:|
 | **per second** | $0.0663 · 14.26 cr | $0.1326 · 28.51 cr | $0.2651 · 57.01 cr |
 
-Through September 23, 2026, Wan 3.0 is 30% off — per second: 480p $0.0464 · 9.98 cr, 720p $0.0928 · 19.96 cr, 1080p $0.1856 · 39.91 cr.
-
-Example: the `omni-reference-to-video` and `reference-to-video` scripts generate 5 s at `720p` — **142.57 credits · $0.66** at list price (99.8 credits · $0.46 during the discount).
+Example: the `omni-reference-to-video` and `reference-to-video` scripts generate 5 s at `720p` — **142.57 credits · $0.66** at list price.
 
 <br>
 
