@@ -2,7 +2,7 @@
 //
 // Usage:
 //   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
-//   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
+//   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/api-keys
 //   npx tsx video-extend.ts             # or: node --experimental-strip-types video-extend.ts
 //
 // No third-party dependencies. Node.js 18+.

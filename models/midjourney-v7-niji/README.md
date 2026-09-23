@@ -12,7 +12,7 @@
   <a href="https://kinovi.ai/models/midjourney-v7-niji"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
 </p>
 
-> Try it in the [Playground](https://kinovi.ai/app/gallery?model=midjourney-v7-niji) · Full reference at [kinovi.ai/docs/models/midjourney-v7-niji](https://kinovi.ai/docs/models/midjourney-v7-niji) · Get an [API key](https://kinovi.ai/app/api-keys)
+> Try it in the [Playground](https://kinovi.ai/app/gallery?model=midjourney-v7-niji) · Full reference at [kinovi.ai/docs/models/midjourney-v7-niji](https://kinovi.ai/docs/models/midjourney-v7-niji) · Get an [API key](https://kinovi.ai/api-keys)
 
 <br>
 
@@ -20,7 +20,7 @@
 
 ```bash
 # Put KINOVI_API_KEY in ../../.env, or:
-export KINOVI_API_KEY=your-api-key   # https://kinovi.ai/app/api-keys
+export KINOVI_API_KEY=your-api-key   # https://kinovi.ai/api-keys
 
 python3 text-to-image.py             # Python 3.8+, stdlib only
 npx tsx text-to-image.ts             # Node.js 18+, no dependencies

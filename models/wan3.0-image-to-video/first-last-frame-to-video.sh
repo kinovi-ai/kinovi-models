@@ -3,7 +3,7 @@
 #
 # Usage:
 #   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
-#   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
+#   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/api-keys
 #   bash first-last-frame-to-video.sh
 #
 # Requires only curl. No jq needed.

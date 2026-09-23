@@ -3,7 +3,7 @@
 #
 # Usage:
 #   Put KINOVI_API_KEY in a .env file (repo root or this folder), or:
-#   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/app/api-keys
+#   export KINOVI_API_KEY=your-api-key     # https://kinovi.ai/api-keys
 #   python3 text-to-image.py
 #
 # No third-party dependencies. Python 3.8+.

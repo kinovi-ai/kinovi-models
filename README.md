@@ -22,7 +22,7 @@
 ## Quick start
 
 ```bash
-# 1. Get an API key → https://kinovi.ai/app/api-keys
+# 1. Get an API key → https://kinovi.ai/api-keys
 cp .env.example .env            # then paste KINOVI_API_KEY=...
 # or: export KINOVI_API_KEY=your-api-key
 
@@ -397,7 +397,7 @@ Use-case names are shared across models so you always know what to look for: `te
 | | |
 |---|---|
 | Model catalog & pricing | <https://kinovi.ai/models> |
-| API keys | <https://kinovi.ai/app/api-keys> |
+| API keys | <https://kinovi.ai/api-keys> |
 | OpenAPI spec | <https://kinovi.ai/openapi.json> |
 | Playground | <https://kinovi.ai/app/gallery> |
 
