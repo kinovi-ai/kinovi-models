@@ -10,6 +10,7 @@
   <img alt="Type" src="https://img.shields.io/badge/type-video-0ea5e9?style=flat-square">
   <img alt="From" src="https://img.shields.io/badge/from-%240.0737%20%2F%20s-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/seedance2-5"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
+  <a href="https://seed.bytedance.com/en/seedance2_5"><img alt="Official page" src="https://img.shields.io/badge/official-ByteDance%20Seed-111827?style=flat-square"></a>
 </p>
 
 > Try it in the [Playground](https://kinovi.ai/app/gallery?model=seedance2-5) · Full reference at [kinovi.ai/docs/models](https://kinovi.ai/docs/models) · Get an [API key](https://kinovi.ai/api-keys)
@@ -122,8 +123,8 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 |:--|:--|:--|:--|
 | `model` | `string` | **required** | Must be `"seedance2-5"`. |
 | `inputs.prompt` | `string` | **required** | What should happen in the video, in any language. Max **30,000** characters. |
-| `inputs.imageUrls` | `string[]` | – | Up to **30** image URLs (`.jpg` / `.png` / `.webp`). How they are used depends on `mode` — see [Reference media](#reference-media). |
-| `inputs.videoUrls` | `string[]` | – | Up to **10** reference video URLs (`.mp4` / `.mov` / `.webm`), each 2–30 s and **30 s combined**. Switches the task to `reference` mode and the reference-video rate — see [Pricing](#pricing). |
+| `inputs.imageUrls` | `string[]` | – | Up to **30** image URLs (`.jpg` / `.png` / `.webp`), aspect ratio (width ÷ height) 0.4–2.5, width 300–6000 px. How they are used depends on `mode` — see [Reference media](#reference-media). |
+| `inputs.videoUrls` | `string[]` | – | Up to **10** reference video URLs (`.mp4` / `.mov` / `.webm`), each 2–30 s at 24–60 FPS and **30 s combined**. Switches the task to `reference` mode and the reference-video rate — see [Pricing](#pricing). |
 | `inputs.audioUrls` | `string[]` | – | Up to **10** audio URLs (`.mp3` / `.wav` / `.m4a` / `.aac` / `.ogg` / `.flac`), **30 s combined**. **Audio cannot be the only reference** — send at least one image or video with it. |
 | `inputs.mode` | `string` | see description | `keyframe` · `reference`. `keyframe` animates 1–2 images as opening / closing frames; `reference` uses images as subject / style references. When omitted, 1–2 images run as `keyframe`, 3 or more as `reference`, and any video or audio forces `reference`. |
 | `inputs.duration` | `integer` | `5` | Clip length in seconds, an integer from `4` to `30`. |
@@ -201,7 +202,7 @@ Every URL must be publicly reachable **by the generation backend**, not just fro
 
 `GET https://kinovi.ai/api/v1/jobs/recordInfo?taskId=task_…`
 
-Poll every few seconds until `status` is `success` or `fail`. A 5-second clip usually takes 3–6 minutes at `480p` / `720p` and 4–11 minutes at `1080p`; tasks with a reference video take 4–7 minutes. Poll for at least 15 minutes before treating a task as stuck.
+Poll every few seconds until `status` is `success` or `fail`. Measured on Kinovi in September 2026: a 5–15 s clip takes 3–5 minutes at the median and 90% finish within 9 minutes; a 30 s clip takes 6–8 minutes, 90% within 14. A reference video adds a minute or two (30 s with a reference: 90% within 17 minutes). Resolution makes little difference. Poll for at least 20 minutes before treating a task as stuck.
 
 ```json
 {
@@ -278,6 +279,44 @@ Priced **per second of video**, by `outputResolution`. Reference images and audi
 Without a reference video, `duration` × the rate is charged at submit. With a reference video, the reference rate applies to the reference footage plus the output: `duration` × the rate is reserved at submit, and on success the charge becomes `(reference video seconds, up to 30) + duration` at that rate. Failed tasks are refunded in full.
 
 Examples: the text-to-video, image-to-video, first-last-frame-to-video and omni-reference-to-video scripts generate 5 s at `720p` — **295 credits · $1.36**. reference-to-video generates 5 s at `720p` from a 10 s clip — **525 credits · $2.42** (15 s × 35 cr).
+
+## FAQ
+
+### How is a task with a reference video billed?
+
+At the reference-video rate, for the reference footage plus the output: `(reference video seconds, up to 30) + duration`. A 10 s reference with a 5 s output at `720p` is 15 s × 35 cr = **525 credits**. `duration` × the rate is reserved at submit and settled on success — see [Pricing](#pricing).
+
+### How does the API choose between `keyframe` and `reference` mode?
+
+From what you send when `mode` is omitted: 1–2 images run as `keyframe` (opening, or opening and closing frames), 3 or more images run as `reference`, and any video or audio forces `reference`. Set `"mode": "reference"` to use one or two images as subject / style references instead — see [Reference media](#reference-media).
+
+### How do I turn a product photo into a video?
+
+Pass the photo as `imageUrls[0]` and describe the motion in the prompt; the image becomes the opening frame. The [`image-to-video`](./image-to-video.py) script does exactly this. `keyframe` tasks keep the photo's own aspect ratio.
+
+### How do I keep the same character across several clips?
+
+Send the character's images in `imageUrls` with `"mode": "reference"` — up to 30 images, used as subject references — and reuse them for every clip. The [`omni-reference-to-video`](./omni-reference-to-video.py) script shows the request.
+
+### How do I continue a clip into a longer shot?
+
+Pass `output[0].lastFrameImage` as `imageUrls[0]` of the next `keyframe` task, or send the whole clip to [`seedance2-5-extend`](../seedance2-5-extend/README.md). `lastFrameImage` is valid for 24 hours — save a copy if you need it later.
+
+### Can I use photos of real people as references?
+
+Yes. A reference showing a real person's face is not rejected for that reason — across roughly 100,000 Seedance 2.5 tasks on Kinovi in September 2026, none failed for containing a real person. References and results are still reviewed for copyright and sensitive content.
+
+### Why was my task rejected for copyright or sensitive content?
+
+Seedance 2.5 reviews both the references and the result, and most rejections are copyright-related. When the first route rejects a task, Kinovi resubmits it on a second route automatically — no new request, no second charge; in September 2026 that completed about 2 in 5 tasks the first route had rejected. If both reject it, the task fails with `1001` and is refunded in full; change the prompt or the references.
+
+### How long does a task take?
+
+About 3–5 minutes for a 5–15 s clip and 6–8 minutes for 30 s, at the median; a reference video adds a minute or two. Poll for at least 20 minutes before treating a task as stuck.
+
+### My task failed with `asset_review_failed`. What should I do?
+
+A reference could not be fetched, did not meet the input limits, or was rejected by review; the message names which one. Images need an aspect ratio of 0.4–2.5 and a width of 300–6000 px; reference videos 2–30 s at 24–60 FPS. Re-host the file through [Kinovi uploads](https://kinovi.ai/docs/uploads) or replace it. Failed tasks are refunded in full — see [Error codes](#error-codes).
 
 <br>
 

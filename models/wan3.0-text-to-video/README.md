@@ -10,6 +10,7 @@
   <img alt="Type" src="https://img.shields.io/badge/type-video-0ea5e9?style=flat-square">
   <img alt="From" src="https://img.shields.io/badge/from-%240.0663%20%2F%20s-22c55e?style=flat-square">
   <a href="https://kinovi.ai/models/wan3-text-to-video"><img alt="Model page" src="https://img.shields.io/badge/kinovi.ai-model%20page-111827?style=flat-square"></a>
+  <a href="https://modelstudio.alibabacloud.com/intl/blog/wan3-ai-video-generation-model/"><img alt="Official page" src="https://img.shields.io/badge/official-Alibaba%20Cloud-111827?style=flat-square"></a>
 </p>
 
 > Try it in the [Playground](https://kinovi.ai/app/gallery?model=wan3.0-text-to-video) · Full reference at [kinovi.ai/docs/models/wan3.0-text-to-video](https://kinovi.ai/docs/models/wan3.0-text-to-video) · Get an [API key](https://kinovi.ai/api-keys)
@@ -201,6 +202,28 @@ Priced **per second of video**, by `outputResolution`. `duration` × the rate is
 | **per second** | $0.0663 · 14.26 cr | $0.1326 · 28.51 cr | $0.2651 · 57.01 cr |
 
 Example: the `text-to-video` script generates 5 s at `720p` — **142.57 credits · $0.66** at list price.
+
+## FAQ
+
+### What is the difference between Wan 3.0 and Wan 3.0 Prime?
+
+[`wan3.0-prime-text-to-video`](../wan3.0-prime-text-to-video/README.md) takes the same inputs and finishes roughly twice as fast, at a higher per-second price — $0.1806 instead of $0.1326 at `720p`. Switching is a one-line change of `model` — see [Standard and Prime](#standard-and-prime).
+
+### How long does a task take?
+
+A 5-second `720p` clip usually takes about 3 minutes; longer clips and `1080p` take longer. Poll for at least 15 minutes before treating a task as stuck — or switch to [Prime](../wan3.0-prime-text-to-video/README.md), which finishes roughly twice as fast.
+
+### How do I make a vertical clip for TikTok, Reels or Shorts?
+
+Set `"aspectRatio": "9:16"` in the [`text-to-video`](./text-to-video.py) script. At `720p` the output is 720×1280.
+
+### Can I get a clip without the generated audio?
+
+Yes — set `"audio": false` and the output is a silent clip. Audio is on by default.
+
+### Why did my task fail with `FaceDetectionSuspect`?
+
+The result looked like a real, identifiable person, so it was blocked. Describe a fictional or stylised character instead. The task is refunded in full — see [Error codes](#error-codes).
 
 <br>
 
