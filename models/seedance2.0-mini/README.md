@@ -224,7 +224,11 @@ Poll every couple of seconds until `status` is `success` or `fail`. A short clip
   ],
   "error": null,
   "createTime": 1790048061199,
-  "completeTime": 1790048165559
+  "completeTime": 1790048165559,
+  "usage": {
+    "completion_tokens": 108900,
+    "total_tokens": 108900
+  }
 }
 ```
 
@@ -247,6 +251,8 @@ Poll every couple of seconds until `status` is `success` or `fail`. A short clip
 | `output[0].mediaType` | `string` | `video/mp4`. |
 | `output[0].seed` | `integer` | The seed actually used, whether you set one or not. |
 | `output[0].lastFrameImage` | `string` | PNG of the final frame at the video's resolution. Use it as `imageUrls[0]` of a follow-up `keyframe` task to continue the shot. |
+| `usage.completion_tokens` | `integer` | Tokens generated for the video. |
+| `usage.total_tokens` | `integer` | Total tokens for the task. |
 
 `creditsUsed` is the amount reserved at submit; `recordInfo` does not carry a refund flag, so a `fail` still shows the original `creditsUsed` even though the credits are back in your balance.
 

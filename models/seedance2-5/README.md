@@ -133,6 +133,7 @@ Response `200 OK` — the task is queued and credits are reserved. Use `taskId` 
 | `inputs.generate_audio` | `boolean` | `true` | Generate a synced audio track. Set `false` for a silent video. |
 | `inputs.bitrate_mode` | `string` | – | Set to `"high"` for a higher-bitrate encode; omit for the standard bitrate. |
 | `inputs.output_format` | `string` | `mp4` | `mp4` · `mov`. |
+| `inputs.omni_reference_task_type` | `string` | – | `auto` · `reference` · `edit` · `extend`. Pins how the model treats your reference media. Omitted or `auto`, the model decides from the prompt and may read a reference request as an edit or extend — the output then follows the reference video's aspect ratio and length instead of your `aspectRatio` / `duration`. `reference` keeps your `aspectRatio` and `duration`. |
 | `inputs.seed` | `integer` | random | `0`–`4294967295`, or `-1` for random. The same seed does not reproduce a clip; the seed actually used comes back as `output[0].seed`. |
 | `callBackUrl` | `string` | – | Optional webhook called when the task finishes. |
 
@@ -222,7 +223,11 @@ Poll every few seconds until `status` is `success` or `fail`. Measured on Kinovi
   ],
   "error": null,
   "createTime": 1790090613532,
-  "completeTime": 1790090988835
+  "completeTime": 1790090988835,
+  "usage": {
+    "completion_tokens": 108900,
+    "total_tokens": 108900
+  }
 }
 ```
 
@@ -245,6 +250,8 @@ Poll every few seconds until `status` is `success` or `fail`. Measured on Kinovi
 | `output[0].mediaType` | `string` | `video/mp4`, or `video/quicktime` for `mov`. |
 | `output[0].seed` | `integer` | The seed actually used. |
 | `output[0].lastFrameImage` | `string` | JPEG of the final frame — use it as `imageUrls[0]` of a follow-up `keyframe` task to continue the shot. Temporary link, valid for 24 hours; save a copy if you need it later. |
+| `usage.completion_tokens` | `integer` | Tokens generated for the video. |
+| `usage.total_tokens` | `integer` | Total tokens for the task. |
 
 For tasks with a reference video, `creditsUsed` is updated to the final amount shortly after `status` turns `success` (see [Pricing](#pricing)). It is not refund-adjusted: a `fail` still shows the reserved amount, although the credits are back in your balance.
 

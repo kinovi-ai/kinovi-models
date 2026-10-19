@@ -165,7 +165,11 @@ Poll every few seconds until `status` is `success` or `fail`. A 6–20 second so
   ],
   "error": null,
   "createTime": 1790094886124,
-  "completeTime": 1790095143301
+  "completeTime": 1790095143301,
+  "usage": {
+    "completion_tokens": 108900,
+    "total_tokens": 108900
+  }
 }
 ```
 
@@ -188,6 +192,8 @@ Poll every few seconds until `status` is `success` or `fail`. A 6–20 second so
 | `output[0].mediaType` | `string` | `video/mp4`, or `video/quicktime` for `mov`. |
 | `output[0].seed` | `integer` | The seed actually used. |
 | `output[0].lastFrameImage` | `string` | JPEG of the final frame. Temporary link, valid for 24 hours; save a copy if you need it later. |
+| `usage.completion_tokens` | `integer` | Tokens generated for the video. |
+| `usage.total_tokens` | `integer` | Total tokens for the task. |
 
 `creditsUsed` is updated to the final amount shortly after `status` turns `success` (see [Pricing](#pricing)). It is not refund-adjusted: a `fail` still shows the reserved amount, although the credits are back in your balance.
 
