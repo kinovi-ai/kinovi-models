@@ -142,7 +142,7 @@ Only `model` and `inputs.prompt` are required. The optional fields below are sho
 
 ### Reference images
 
-`inputs.uploadedUrls` takes at most **one** image URL. Each must be a URL the generation backend can fetch at request time — a public CDN, object storage, or a Kinovi upload. Localhost, private networks and URLs that need a login do not work. For files on your own machine, upload them first ([docs: Uploading assets](https://kinovi.ai/docs/uploads)): `POST /api/v1/uploads` returns an `uploadUrl` to `PUT` the bytes to and the public `url` to pass here; uploads are kept for 24 hours. A URL that cannot be fetched is dropped and the task runs as text-to-image; an image rejected by Midjourney's image filters ends the task in `fail` (see [Error codes](#error-codes)).
+`inputs.uploadedUrls` takes at most **one** image URL. Each must be a URL the generation backend can fetch at request time — a public CDN, object storage, or a Kinovi upload. Localhost, private networks and URLs that need a login do not work. For files on your own machine, upload them first ([docs: Uploading assets](https://kinovi.ai/docs/uploads)): `POST /api/v1/uploads` returns an `uploadUrl` to `PUT` the bytes to and the public `url` to pass here; uploads are kept for 7 days. A URL that cannot be fetched is dropped and the task runs as text-to-image; an image rejected by Midjourney's image filters ends the task in `fail` (see [Error codes](#error-codes)).
 
 ### Output sizes
 

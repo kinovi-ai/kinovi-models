@@ -137,7 +137,7 @@ There is no `duration` to set: the output has the source's length and aspect rat
 
 ### Reference media
 
-One source video is required; images and audio are optional extras. Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. A file that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
+One source video is required; images and audio are optional extras. Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 7 days. A file that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
 
 <br>
 

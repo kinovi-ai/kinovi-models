@@ -373,7 +373,7 @@ curl -s -X PUT "$UPLOAD_URL" -H "Content-Type: image/png" --data-binary @referen
 # 3. pass "url" in the model's reference field (uploadedUrls / imageUrls / …)
 ```
 
-Uploads are deleted after 24 hours; generated outputs are not. There is no file-size limit on Kinovi's side. Full reference, with Python and Node helpers: [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads).
+Uploads and generated outputs are deleted after 7 days. There is no file-size limit on Kinovi's side. Full reference, with Python and Node helpers: [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads).
 
 <br>
 

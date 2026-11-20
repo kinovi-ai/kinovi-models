@@ -194,7 +194,7 @@ Only `model` and `inputs.prompt` are required; the other fields are shown at the
 
 When media is given and `aspectRatio` is omitted, the output follows the reference: a 9:16 reference video or a portrait image yields a 9:16 clip, a landscape image yields 16:9. Set `aspectRatio` explicitly to force a different frame — a portrait image with `"aspectRatio": "16:9"` gives a 16:9 clip.
 
-Files must be publicly reachable **by the generation backend** at request time, not just from your machine. To use local files, upload them first via `POST /api/v1/uploads` and pass the returned URLs; uploaded files are kept for 24 hours. A reference the backend cannot fetch, or that fails media review, fails the task with `error.code = "asset_review_failed"` and a message naming the media (`"Reference image 1 failed review. Please replace it."`); the credits are refunded. A reference video that cannot be downloaded fails within seconds with `"Failed to download your reference video…"`.
+Files must be publicly reachable **by the generation backend** at request time, not just from your machine. To use local files, upload them first via `POST /api/v1/uploads` and pass the returned URLs; uploaded files are kept for 7 days. A reference the backend cannot fetch, or that fails media review, fails the task with `error.code = "asset_review_failed"` and a message naming the media (`"Reference image 1 failed review. Please replace it."`); the credits are refunded. A reference video that cannot be downloaded fails within seconds with `"Failed to download your reference video…"`.
 
 <br>
 

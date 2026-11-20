@@ -182,7 +182,7 @@ Only `model` and `inputs.prompt` are required; the other fields are shown at the
 
 To continue a clip, use [`seedance2-5-extend`](../seedance2-5-extend/README.md); to change what is in a clip while keeping its motion, use [`seedance2-5-edit`](../seedance2-5-edit/README.md).
 
-Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. A reference that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
+Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 7 days. A reference that cannot be fetched or fails media review ends the task in `fail` with `asset_review_failed`, and the credits are refunded.
 
 ### Output sizes
 
