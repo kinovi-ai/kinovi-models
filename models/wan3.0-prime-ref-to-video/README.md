@@ -157,7 +157,7 @@ Only `model` and `inputs.prompt` are required; the other fields are shown at the
 
 References are numbered per type in the order you send them: `@Image1` is `imageUrls[0]`, `@Video1` is `videoUrls[0]`, `@Audio1` is `audioUrls[0]`. Types can be mixed in one task within the limits in the field table.
 
-Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. Images can be up to 8000×8000; very small images are rejected. Media that cannot be downloaded or decoded, or that appears to show a real person's face, ends the task in `fail` — see [Error codes](#error-codes).
+Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 7 days. Images can be up to 8000×8000; very small images are rejected. Media that cannot be downloaded or decoded, or that appears to show a real person's face, ends the task in `fail` — see [Error codes](#error-codes).
 
 ### Standard and Prime
 

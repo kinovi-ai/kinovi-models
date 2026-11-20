@@ -148,7 +148,7 @@ Only `model` and `inputs.prompt` are required (plus `inputs.imageUrls` here); th
 
 With the default `aspectRatio` (`16:9`) a square or portrait image is recomposed into a full 16:9 frame — the model extends the scene rather than adding bars. Send `"aspectRatio": "adaptive"` to keep the image's own shape (a 1024×1024 image gives 640×640 at `480p`).
 
-Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 24 hours. Images can be up to 8000×8000; very small images are rejected. An image that cannot be downloaded, or that appears to show a real person's face, ends the task in `fail` — see [Error codes](#error-codes).
+Every URL must be publicly reachable **by the generation backend**, not just from your machine. For local files, upload them first — see [kinovi.ai/docs/uploads](https://kinovi.ai/docs/uploads); uploaded files are kept for 7 days. Images can be up to 8000×8000; very small images are rejected. An image that cannot be downloaded, or that appears to show a real person's face, ends the task in `fail` — see [Error codes](#error-codes).
 
 ### Standard and Prime
 
